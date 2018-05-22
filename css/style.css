@@ -1,0 +1,292 @@
+.imghead {
+  /* background-image: url('../images/bookshelf_2.jpg'); */
+  background: linear-gradient(to bottom, #ffffff 0%, #eaeaea 100%);
+  height: auto;
+  border-bottom: 1px #aaaaab solid;
+
+}
+
+
+.logo {
+  background-image: url('../images/icon.png');
+  
+  background-size: contain;
+  background-repeat: no-repeat;
+  height: 22px;
+  width: 22px;
+}
+
+
+.row>a{
+  text-decoration: none;
+  color: #191919;
+  cursor: pointer;
+
+}
+
+.row>a:hover{
+  text-decoration: none;
+  color: #ff9c29;
+}
+.app-name{
+    font-size: 14px;
+  font-weight: 600;
+
+}
+
+ 
+.body{
+  width:643px;
+}
+
+.searchBox {
+	margin-top: 15px;
+	margin-left: 15px;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	width: 100%;
+}
+
+
+.bgimage {
+  margin-top: 2px;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+  border: 1px #aaaaab solid;
+  background: linear-gradient(to bottom, #ffffff 0%, #eaeaea 100%);
+  width:100%;
+
+/*   border-color: #000000; */
+}
+
+table, th , td  {
+  width:100%;
+
+}
+
+table {
+  margin-top: 0px;
+  border-collapse: separate;
+  border-spacing: 1px;
+}
+
+table tr:nth-child(odd) {
+  background-color: #f1f1f1;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+
+#bookmark_scrollable {
+  max-height: 300px;
+  overflow-x:hidden;
+}
+
+.bookmarkTitle {
+  border: 1px solid grey;
+  text-align: center;
+  cursor: pointer;
+  width:80%;
+  height:40px;
+}
+
+
+.dateAdded {
+  border: 1px solid grey;
+  text-align: center;
+  cursor: pointer;
+  width:20%;
+  height:40px;
+}
+
+.title_bookmark{
+  border: 1px solid grey;
+  width:80%;
+}
+
+.title_bookmark:hover {
+    background-color: lightblue;
+} 
+
+.date_bookmark{
+  border: 1px solid grey;
+  text-align: center;
+  width:20%;
+}
+
+
+.window_header {
+
+}
+
+.col-xs-10 {
+  position: relative;
+  min-height: 1px;
+  padding-left: 1px;
+  padding-right: 0px;
+  width: 85%;
+}
+
+@media{
+  .btn{
+        border-radius: 0px;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16),0 2px 5px 0 rgba(0,0,0,0.12);
+  }
+}
+
+.sortIcon{
+  display:inline;
+  cursor: pointer;
+}
+
+
+.moreControlOpt{
+  float: right;
+  cursor: pointer;
+}
+
+.moreControlOpt:hover {
+    border: 1px solid grey;
+} 
+
+body.ngdialog-open{
+  overflow:visible! important;
+}
+
+.myCenter{
+  text-align: center;
+}
+
+.label_bookmark_info{
+  position:relative;
+  float:right;
+  margin-top: 40px;
+
+  font-family: Sans-serif;
+  color: blue;
+}
+
+.icon_yellow{
+  -webkit-text-stroke-width: 1px;
+  -webkit-text-stroke-color: orange;
+  color:yellow;
+}
+
+.bookmark_setting{
+  float:right;
+  margin-top: 0px;
+}
+
+.btn_setting {
+    display: inline-block;
+    border-radius: 20px;
+    border: 1px #dbdbdb solid;
+    background: #fefefe;
+    background: -moz-linear-gradient(top, #fefefe 0%, #eeeeee 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #fefefe), color-stop(100%, #eeeeee));
+    background: -webkit-linear-gradient(top, #fefefe 0%, #eeeeee 100%);
+    background: -o-linear-gradient(top, #fefefe 0%, #eeeeee 100%);
+    background: -ms-linear-gradient(top, #fefefe 0%, #eeeeee 100%);
+    background: linear-gradient(to bottom, #fefefe 0%, #eeeeee 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fefefe', endColorstr='#eeeeee', GradientType=0 );
+    color: #6a6a6a;
+    text-decoration: none;
+    font-size: 16px;
+    padding: 1 6px;
+}
+
+.bookmark-calendar{
+  background: #fff; 
+  cursor: pointer; 
+  padding: 8px 12px; 
+  border: 1px solid #ccc; 
+  width: 100%;
+  height: 34px;
+}
+
+.waves-effect {
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    z-index: 1;
+    will-change: opacity, transform;
+    -webkit-transition: all 0.3s ease-out;
+    -moz-transition: all 0.3s ease-out;
+    -o-transition: all 0.3s ease-out;
+    -ms-transition: all 0.3s ease-out;
+    transition: all 0.3s ease-out;
+}
+
+.searchclear {
+    color: #777;
+    cursor: pointer;
+    font-size: 14px;
+    height: 14px;
+    margin: auto;
+    position: absolute!important;
+    right: 10px;
+    z-index: 1001;
+}
+
+.searchclear:hover {
+  color: #000;
+}
+
+.icon-calendar{
+      position: absolute!important;
+      z-index: 500;
+      left:10px;
+      top:10px;
+}
+
+.icon-link{
+      position: absolute!important;
+      z-index: 500;
+      left:10px;
+      top:10px;
+}
+.icon-bookmark{
+      position: absolute!important;
+      z-index: 500;
+      left:10px;
+      top:10px;
+}
+
+.input-group .form-control {
+
+    padding-left: 30;
+}
+
+
+/* .ripple{
+  overflow:hidden;
+}
+
+.ripple-effect{
+  position: absolute;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  background: white;
+
+    
+  animation: ripple-animation 2s;
+}
+
+
+@keyframes ripple-animation {
+    from {
+      transform: scale(1);
+      opacity: 0.4;
+    }
+    to {
+      transform: scale(100);
+      opacity: 0;
+    }
+} */

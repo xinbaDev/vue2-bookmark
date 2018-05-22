@@ -1,0 +1,62 @@
+.bookmark_option{
+	padding-left: 20px;
+}
+
+.save_section{
+	padding-top: 20px;
+}
+
+.opition-line {
+    border-bottom: 1px solid #EEE;
+    height: 10px;
+    margin-bottom: 20px;
+}
+
+.bookmark_option_desc{
+	color:grey;
+}
+
+.rate span {
+    display: inline-block;
+    background: url(../images/star.png) no-repeat left;
+    padding-left: 16px;
+	
+}
+
+a.btn{
+	border-radius: 20px;
+	padding: 5px
+}
+
+.rate {
+    background: #f6a018;
+    border-color: #f6a018;
+    text-decoration: none;
+    color: #fff;
+}
+
+.rate:hover {
+    background: #e48f0a;
+    border-color: #e48f0a;
+    text-decoration: none;
+    color: #fff;
+}
+
+.filebug{
+	float:right;
+}
+
+footer {
+    border-top: 1px solid #eee;
+    margin-top: 18px;
+    padding: 8px 0;
+}
+
+#old_bookmark_value{
+	float:right;
+
+}
+
+#old_bookmark{
+	width:250px;
+}

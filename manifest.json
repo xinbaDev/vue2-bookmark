@@ -1,0 +1,20 @@
+{
+  "name": "Bookmark Assistant",
+  "version": "1.2.1",
+  "description": "Having trouble managing hundreds of bookmarks? This chrome app is for you!",
+  "permissions": [
+    "bookmarks",
+    "storage",
+    "chrome://favicon/"
+  ],
+  "browser_action": {
+      "default_title": "Bookmark Assistant",
+      "default_icon": "icon.png",
+      "default_popup": "popup.html"
+  },
+  "manifest_version": 2,
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  }
+}
