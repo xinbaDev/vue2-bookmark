@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <link rel="stylesheet" href="css/font-awesome-4.6.3/css/font-awesome.min.css">
+    <link 
+      rel="stylesheet" 
+      href="css/font-awesome-4.6.3/css/font-awesome.min.css">
     <Header/>
     <SearchBar/>
   </div>
@@ -11,7 +13,7 @@ import SearchBar from './components/SearchBar'
 import Header from './components/Header'
 
 export default {
-    name: 'app',
+    name: 'App',
     date: {
 
     },

@@ -1,4 +1,69 @@
 <template>
+<<<<<<< HEAD
+  <div>
+    <table v-show="mode == 'time'">
+      <td>
+        <div 
+          id="reportrange" 
+          class="pull-right bookmark-calendar" >
+          <i class="glyphicon glyphicon-calendar fa fa-calendar"/><span/>
+        </div>
+      </td>
+    </table>
+
+    <table v-show="mode != 'time'">
+      <td>
+        <div style="position: relative; width: 575px;">
+          <input 
+            id="search" 
+            v-model="searchText" 
+            :placeholder="numberOfBookMarks" 
+            class="form-control fa">
+          <i 
+            v-if="mode == 'title'" 
+            class="icon-bookmark fa fa-bookmark"/>
+          <i 
+            v-if="mode == 'url'" 
+            class="icon-link fa fa-link"/>
+          <i 
+            v-if="mode == 'time'" 
+            class="icon-calendar fa fa-calendar"/>
+        </div>
+      </td>
+    </table>
+
+    <div 
+      v-if="isNotEmpty()" 
+      id="bookmark_scrollable">
+      <table>
+        <td 
+          class="bookmarkTitle" 
+          @click="sortType = 'title'; sortReverse = !sortReverse">Title
+          <span 
+            v-show="sortType == 'title' && sortReverse" 
+            class="fa fa-caret-down sortIcon"/>
+          <span 
+            v-show="sortType == 'title' && !sortReverse" 
+            class="fa fa-caret-up sortIcon"/>
+        </td>
+
+        <td 
+          class="dateAdded" 
+          @click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
+          <span 
+            v-show="sortType == 'dateAdded' && sortReverse" 
+            class="fa fa-caret-down sortIcon"/>
+          <span 
+            v-show="sortType == 'dateAdded' && !sortReverse" 
+            class="fa fa-caret-up sortIcon"/>
+        </td>
+
+        <tr v-for="bookmark in filteredBookmarkLists">
+          <td 
+            class="title_bookmark" 
+            @mouseover="hoverEdit = true" 
+            @mouseleave="hoverEdit = false"> 
+=======
 
 	<div>
 		<table v-show="mode == 'time'">
@@ -34,61 +99,89 @@
 
 				<tr v-for="bookmark in filteredBookmarkLists">
 				    <td class="title_bookmark" @mouseover="hoverEdit = true" @mouseleave="hoverEdit = false"> 
+>>>>>>> 27dbea129634aa6cdddd946c6da494f9ab44cf9c
 				    	
-				    	<img :src = "bookmark? bookmark.getFavIcon():''">
-				    	<a href='' @click="openLink(bookmark.url)">{{bookmark? bookmark.titletext:""}}</a> 
-				    	<!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
+            <img :src = "bookmark? bookmark.getFavIcon():''">
+            <a 
+              href="" 
+              @click="openLink(bookmark.url)">{{ bookmark? bookmark.titletext:"" }}</a> 
+            <!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
 						
-						<i v-show="bookmark? bookmark.isImportant:false" @click="changeImportance(bookmark)" class="fa fa-star icon_yellow moreControlOpt"> </i>
+            <i 
+              v-show="bookmark? bookmark.isImportant:false" 
+              class="fa fa-star icon_yellow moreControlOpt" 
+              @click="changeImportance(bookmark)"/>
 						
 
-				    	<!-- <i v-show="hoverEdit == true" @click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
+              <!-- <i v-show="hoverEdit == true" @click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
 				    	<i v-show="hoverEdit == true" @click="editBookmarks(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i> -->
-						<!-- <i v-show="hoverEdit == true && !bookmark.isImportant" @click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i> -->
+              <!-- <i v-show="hoverEdit == true && !bookmark.isImportant" @click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i> -->
 
-				    </td>
-					<td class="date_bookmark">
-						{{bookmark? bookmark.getDate():""}}
-					</td>
-				</tr>
+          </td>
+          <td class="date_bookmark">
+            {{ bookmark? bookmark.getDate():"" }}
+          </td>
+        </tr>
 				
-			</table>
-		</div>
+      </table>
+    </div>
 
-		<div v-if="isSearchByDate" class="bookmark_scrollable">
-			<table>
-				<td class="bookmarkTitle" @click="sortType = 'title'; sortReverse = !sortReverse">Title
-					<span v-show="sortType == 'title' && sortReverse" class="fa fa-caret-down sortIcon"></span>
-		            <span v-show="sortType == 'title' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
-				</td>
+    <div 
+      v-if="isSearchByDate" 
+      class="bookmark_scrollable">
+      <table>
+        <td 
+          class="bookmarkTitle" 
+          @click="sortType = 'title'; sortReverse = !sortReverse">Title
+          <span 
+            v-show="sortType == 'title' && sortReverse" 
+            class="fa fa-caret-down sortIcon"/>
+          <span 
+            v-show="sortType == 'title' && !sortReverse" 
+            class="fa fa-caret-up sortIcon"/>
+        </td>
 
-				<td class="dateAdded" @click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
-					<span v-show="sortType == 'dateAdded' && sortReverse" class="fa fa-caret-down sortIcon"></span>
-		            <span v-show="sortType == 'dateAdded' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
-				</td>
+        <td 
+          class="dateAdded" 
+          @click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
+          <span 
+            v-show="sortType == 'dateAdded' && sortReverse" 
+            class="fa fa-caret-down sortIcon"/>
+          <span 
+            v-show="sortType == 'dateAdded' && !sortReverse" 
+            class="fa fa-caret-up sortIcon"/>
+        </td>
 				
-				<tr v-for="bookmark in filteredBookmarkLists">
-				    <td class="title_bookmark" @mouseover="hoverEdit = true" @mouseleave="hoverEdit = false"> 
+        <tr v-for="bookmark in filteredBookmarkLists">
+          <td 
+            class="title_bookmark" 
+            @mouseover="hoverEdit = true" 
+            @mouseleave="hoverEdit = false"> 
 				    	
-				    	<img :src = "bookmark? bookmark.getFavIcon():''">
-				    	<a href='' @click="openLink(bookmark.url)">{{bookmark? bookmark.titletext:""}}</a> 
+            <img :src = "bookmark? bookmark.getFavIcon():''">
+            <a 
+              href="" 
+              @click="openLink(bookmark.url)">{{ bookmark? bookmark.titletext:"" }}</a> 
 						
-						<i v-show="bookmark? bookmark.isImportant:false" @click="changeImportance(bookmark)" class="fa fa-star icon_yellow moreControlOpt"> </i>
+            <i 
+              v-show="bookmark? bookmark.isImportant:false" 
+              class="fa fa-star icon_yellow moreControlOpt" 
+              @click="changeImportance(bookmark)"/>
 						
 						
-				    	<!-- <i v-show="hoverEdit == true" @click="deleteBookmark(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
+              <!-- <i v-show="hoverEdit == true" @click="deleteBookmark(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
 				    	<i v-show="hoverEdit == true" @click="editBookmark(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i> -->
-						<!-- <i v-show="hoverEdit == true && !bookmark.isImportant" @click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i> -->
+              <!-- <i v-show="hoverEdit == true && !bookmark.isImportant" @click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i> -->
 				    	
-				    </td>
-					<td class="date_bookmark">
-						{{bookmark? bookmark.getDate():""}}
-					</td>
-				</tr>
-			</table>
-		</div>
-
+          </td>
+          <td class="date_bookmark">
+            {{ bookmark? bookmark.getDate():"" }}
+          </td>
+        </tr>
+      </table>
 	</div>
+
+  </div>
 </template>
 
 
@@ -145,6 +238,9 @@
 				return booklists
 			}
 		},
+		created() {
+			this.getBookmarks()
+		},
 		methods: {
 			isNotEmpty() {
 				return this.searchText != "";
@@ -186,9 +282,6 @@
 				}
 			}
 		},
-		created() {
-			this.getBookmarks()
-		}
 	}
 </script>
 

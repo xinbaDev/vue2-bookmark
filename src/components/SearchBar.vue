@@ -1,23 +1,43 @@
 <template>
-	<div>
-		<div class="input-group">
+  <div>
+    <div class="input-group">
 
-			<div class="input-group-addon btn_toggle" @click="isOpen = !isOpen">
-				<i class="fa fa-search"></i>
-				<i v-show="!isOpen" class="fa fa-angle-right"></i>
-				<i v-show="isOpen" class="fa fa-angle-left"></i>
+      <div 
+        class="input-group-addon btn_toggle" 
+        @click="isOpen = !isOpen">
+        <i class="fa fa-search"/>
+        <i 
+          v-show="!isOpen" 
+          class="fa fa-angle-right"/>
+        <i 
+          v-show="isOpen" 
+          class="fa fa-angle-left"/>
 
-			</div>
+      </div>
 
-			<div class="toggle-menu" v-if="isOpen">
-			    <li><div class="btn_toggle" @click="titleClick"><i class="fa fa-bookmark"></i> Title<i v-show="mode == 'title'" class="fa fa-check"></i></div></li>
-			    <li><div class="btn_toggle" @click="urlClick"><i class="fa fa-link"></i> URL<i v-show="mode == 'url'" class="fa fa-check"></i></div></li>
-			    <li><div class="btn_toggle" @click="timeClick"><i class="fa fa-calendar"></i> Time<i v-show="mode == 'time'" class="fa fa-check"></i></div></li>
-			</div>
+      <div 
+        v-if="isOpen" 
+        class="toggle-menu">
+        <li><div 
+          class="btn_toggle" 
+          @click="titleClick"><i class="fa fa-bookmark"/> Title<i 
+            v-show="mode == 'title'" 
+            class="fa fa-check"/></div></li>
+        <li><div 
+          class="btn_toggle" 
+          @click="urlClick"><i class="fa fa-link"/> URL<i 
+            v-show="mode == 'url'" 
+            class="fa fa-check"/></div></li>
+        <li><div 
+          class="btn_toggle" 
+          @click="timeClick"><i class="fa fa-calendar"/> Time<i 
+            v-show="mode == 'time'" 
+            class="fa fa-check"/></div></li>
+      </div>
 			
-			<SearchMode :mode="mode"></SearchMode>
-		</div>
-	</div>
+      <SearchMode :mode="mode"/>
+    </div>
+  </div>
 </template>
 
 
@@ -26,14 +46,14 @@
 	
 	export default {
 		name: 'SearchBar',
+		components: {
+			SearchMode
+		},
 		data() {
 			return {
 				isOpen: false,
 				mode: 'title'
 			}
-		},
-		components: {
-			SearchMode
 		},
 		methods: {
 			titleClick() {

@@ -1,14 +1,18 @@
 <template>
-	<div class="imghead">
-		<div class="container">
-			<div class="row">
-				<div class="col-xs-1 logo"></div>
-				<a class="app-name" @click="open_web_store">Bookrmark Assistant</a>
+  <div class="imghead">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-1 logo"/>
+        <a 
+          class="app-name" 
+          @click="open_web_store">Bookrmark Assistant</a>
 
-				<div class= "fa fa-cog bookmark_setting btn btn_setting" @click="open_options_page" ></div>
-			</div>
-		</div>
-	</div>
+        <div 
+          class= "fa fa-cog bookmark_setting btn btn_setting" 
+          @click="open_options_page" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
