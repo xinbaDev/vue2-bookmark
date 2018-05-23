@@ -1,5 +1,4 @@
 <template>
-<<<<<<< HEAD
   <div>
     <table v-show="mode == 'time'">
       <td>
@@ -63,43 +62,6 @@
             class="title_bookmark" 
             @mouseover="hoverEdit = true" 
             @mouseleave="hoverEdit = false"> 
-=======
-
-	<div>
-		<table v-show="mode == 'time'">
-			<td>
-				<div id="reportrange" class="pull-right bookmark-calendar" >
-				    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i><span></span>
-				</div>
-			</td>
-		</table>
-
-		<table v-show="mode != 'time'">
-			<td>
-				<div style="position: relative; width: 575px;">
-					<input id="search" class="form-control fa" v-model="searchText" :placeholder="numberOfBookMarks"/>
-					<i v-if="mode == 'title'" class="icon-bookmark fa fa-bookmark"></i>
-					<i v-if="mode == 'url'" class="icon-link fa fa-link"></i>
-					<i v-if="mode == 'time'" class="icon-calendar fa fa-calendar"></i>
-				</div>
-			</td>
-		</table>
-
-		<div v-if="isNotEmpty()" id="bookmark_scrollable">
-			<table>
-				<td class="bookmarkTitle" @click="sortType = 'title'; sortReverse = !sortReverse">Title
-					<span v-show="sortType == 'title' && sortReverse" class="fa fa-caret-down sortIcon"></span>
-		            <span v-show="sortType == 'title' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
-				</td>
-
-				<td class="dateAdded" @click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
-					<span v-show="sortType == 'dateAdded' && sortReverse" class="fa fa-caret-down sortIcon"></span>
-		            <span v-show="sortType == 'dateAdded' && !sortReverse" class="fa fa-caret-up sortIcon"></span>
-				</td>
-
-				<tr v-for="bookmark in filteredBookmarkLists">
-				    <td class="title_bookmark" @mouseover="hoverEdit = true" @mouseleave="hoverEdit = false"> 
->>>>>>> 27dbea129634aa6cdddd946c6da494f9ab44cf9c
 				    	
             <img :src = "bookmark? bookmark.getFavIcon():''">
             <a 
