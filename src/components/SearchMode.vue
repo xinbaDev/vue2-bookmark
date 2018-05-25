@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <table v-show="mode == 'time'">
       <td>
@@ -14,7 +15,7 @@
       <td>
         <div style="position: relative; width: 575px;">
           <input 
-            id="search" 
+            ref="search" 
             v-model="searchText" 
             :placeholder="numberOfBookMarks" 
             class="form-control fa">
@@ -141,7 +142,7 @@
           </td>
         </tr>
       </table>
-	</div>
+    </div>
 
   </div>
 </template>
@@ -202,6 +203,9 @@
 		},
 		created() {
 			this.getBookmarks()
+		},
+		mounted() {
+			this.$refs.search.focus()
 		},
 		methods: {
 			isNotEmpty() {
