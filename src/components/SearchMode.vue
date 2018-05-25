@@ -154,7 +154,12 @@
 /*	import daterangepicker from "../lib/daterangepicker"*/
 	export default {
 		name: 'SearchMode',
-		props: ['mode'],
+		props: {
+			mode: {
+				type: String,
+				required: true
+			},
+		},
 		data() {
 			return {
 				bookmarkManager: "",
