@@ -9,29 +9,27 @@
 </template>
 
 <script>
-import SearchBar from './components/SearchBar'
-import Header from './components/Header'
+import SearchBar from './components/SearchBar';
+import Header from './components/Header';
 
 export default {
-    name: 'App',
-    date: {
+  name: 'App',
+  date: {
 
-    },
-    components: {
-        Header,
-        SearchBar
-    }
-}
+  },
+  components: {
+    Header,
+    SearchBar
+  }
+};
 </script>
 
 <style>
 #app {
-    font-family: 'Avenir', Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
-    width:643px;
+  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  color: #2c3e50;
+  width: 643px;
 }
-
-
 </style>

@@ -34,7 +34,7 @@
             v-show="mode == 'time'" 
             class="fa fa-check"/></div></li>
       </div>
-			
+      
       <SearchMode :mode="mode"/>
     </div>
   </div>
@@ -42,34 +42,34 @@
 
 
 <script>
-	import SearchMode from "./SearchMode"
-	
-	export default {
-		name: 'SearchBar',
-		components: {
-			SearchMode
-		},
-		data() {
-			return {
-				isOpen: false,
-				mode: 'title'
-			}
-		},
-		methods: {
-			titleClick() {
-				this.mode = 'title';
-		        this.isOpen = false;
-			},
-			urlClick() {
-				this.mode = 'url';
-		        this.isOpen = false;
-			},
-			timeClick() {
-				this.mode = 'time';
-		        this.isOpen = false;
-			}
-		}
-	}
+import SearchMode from "./SearchMode";
+  
+export default {
+  name: 'SearchBar',
+  components: {
+    SearchMode
+  },
+  data() {
+    return {
+      isOpen: false,
+      mode: 'title'
+    };
+  },
+  methods: {
+    titleClick() {
+      this.mode = 'title';
+        this.isOpen = false;
+    },
+    urlClick() {
+      this.mode = 'url';
+        this.isOpen = false;
+    },
+    timeClick() {
+      this.mode = 'time';
+        this.isOpen = false;
+    }
+  }
+};
 </script>
 
 
@@ -80,54 +80,54 @@
 }
 
 .toggle-menu{
-	position:absolute;
-	z-index: 1000;
-	
-	list-style: none;
-	box-shadow: 0 6px 12px rgba(0,0,0,.175);
-	background-color: white;
-	margin-top: 3px;
-	margin-left: 3px;
+  position:absolute;
+  z-index: 1000;
+  
+  list-style: none;
+  box-shadow: 0 6px 12px rgba(0,0,0,.175);
+  background-color: white;
+  margin-top: 3px;
+  margin-left: 3px;
 }
 
 .toggle-menu>li{
-	display:inline-block;
-	/* padding-right:15px; */
+  display:inline-block;
+  /* padding-right:15px; */
 }
 
 .toggle-menu>li:hover{
-	color: #262626;
-	text-decoration: none !important;
-	background-color: #f5f5f5;
+  color: #262626;
+  text-decoration: none !important;
+  background-color: #f5f5f5;
 }
 
 .toggle-menu>li>div{
-	height:30px;
-	padding-top: 4px;
+  height:30px;
+  padding-top: 4px;
 }
 
 .btn_toggle{
-	position: relative;
+  position: relative;
 
-	outline: 0;
-	padding: 0 2rem;
-	text-transform: uppercase;
-	vertical-align: middle;
-	-webkit-tap-highlight-color: transparent;
+  outline: 0;
+  padding: 0 2rem;
+  text-transform: uppercase;
+  vertical-align: middle;
+  -webkit-tap-highlight-color: transparent;
 
-	text-decoration: none;
-	color: #fff;
-	background-color: #26a69a;
-	text-align: center;
-	letter-spacing: .5px;
-	transition: .2s ease-out;
-	cursor: pointer;
-	height: 35px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #26a69a;
+  text-align: center;
+  letter-spacing: .5px;
+  transition: .2s ease-out;
+  cursor: pointer;
+  height: 35px;
 }
 
 .btn_toggle:hover{
-	background-color: #2bbbad;
-	color: #333;
+  background-color: #2bbbad;
+  color: #333;
 }
 
 </style>
