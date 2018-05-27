@@ -19,18 +19,18 @@
 export default {
   name: 'Header',
   methods: {
-  	open_options_page() {
-  		if (chrome.runtime.openOptionsPage) {
-			chrome.runtime.openOptionsPage();
-		} else {
-			window.open(chrome.runtime.getURL('options.html'));
-		}
-  	},
-  	open_web_store() {
-  		chrome.tabs.create({url: "https://chrome.google.com/webstore/detail/bookmark-helper/anfdnhenkombplichcifaiecpcfifhdp/"});
-  	}
+    open_options_page() {
+      if (chrome.runtime.openOptionsPage) {
+        chrome.runtime.openOptionsPage();
+      } else {
+        window.open(chrome.runtime.getURL('options.html'));
+      }
+    },
+    open_web_store() {
+      chrome.tabs.create({url: "https://chrome.google.com/webstore/detail/bookmark-helper/anfdnhenkombplichcifaiecpcfifhdp/"});
+    }
   }
-}
+};
 
 </script>
 
@@ -78,7 +78,7 @@ export default {
 }
 
 .bookmark_option {
-	padding-left: 20px;
+  padding-left: 20px;
 }
 
 .bookmark_setting {
