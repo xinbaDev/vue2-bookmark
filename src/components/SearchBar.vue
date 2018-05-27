@@ -36,6 +36,7 @@
       </div>
       
       <SearchMode :mode="mode"/>
+      <SearchResult :mode="mode"/>
     </div>
   </div>
 </template>
@@ -43,11 +44,13 @@
 
 <script>
 import SearchMode from "./SearchMode";
+import SearchResult from "./SearchResult";
   
 export default {
   name: 'SearchBar',
   components: {
-    SearchMode
+    SearchMode,
+    SearchResult
   },
   data() {
     return {
