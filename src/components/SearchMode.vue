@@ -17,8 +17,9 @@
           <input 
             ref="search" 
             v-model="searchText" 
-            :placeholder="numberOfBookMarks" 
-            class="form-control fa">
+            class="form-control fa"
+            @keyup="$emit('change', $event.target.value)"
+          >
           <i 
             v-if="mode == 'title'" 
             class="icon-bookmark fa fa-bookmark"/>

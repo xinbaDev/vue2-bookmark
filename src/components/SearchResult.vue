@@ -1,122 +1,125 @@
 <template>
-<div>
-  <div 
-    v-if="isNotEmpty()" 
-    id="bookmark_scrollable">
-    <table>
-      <td 
-        class="bookmarkTitle" 
-        @click="sortType = 'title'; sortReverse = !sortReverse">Title
-        <span 
-          v-show="sortType == 'title' && sortReverse" 
-          class="fa fa-caret-down sortIcon"/>
-        <span 
-          v-show="sortType == 'title' && !sortReverse" 
-          class="fa fa-caret-up sortIcon"/>
-      </td>
-
-      <td 
-        class="dateAdded" 
-        @click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
-        <span 
-          v-show="sortType == 'dateAdded' && sortReverse" 
-          class="fa fa-caret-down sortIcon"/>
-        <span 
-          v-show="sortType == 'dateAdded' && !sortReverse" 
-          class="fa fa-caret-up sortIcon"/>
-      </td>
-
-      <tr v-for="bookmark in filteredBookmarkLists">
+  <div>
+    <div 
+      v-if="isNotEmpty()" 
+      id="bookmark_scrollable">
+      <table>
         <td 
-          class="title_bookmark" 
-          @mouseover="hoverEdit = true" 
-          @mouseleave="hoverEdit = false"> 
+          class="bookmarkTitle" 
+          @click="sortType = 'title'; sortReverse = !sortReverse">Title
+          <span 
+            v-show="sortType == 'title' && sortReverse" 
+            class="fa fa-caret-down sortIcon"/>
+          <span 
+            v-show="sortType == 'title' && !sortReverse" 
+            class="fa fa-caret-up sortIcon"/>
+        </td>
+
+        <td 
+          class="dateAdded" 
+          @click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
+          <span 
+            v-show="sortType == 'dateAdded' && sortReverse" 
+            class="fa fa-caret-down sortIcon"/>
+          <span 
+            v-show="sortType == 'dateAdded' && !sortReverse" 
+            class="fa fa-caret-up sortIcon"/>
+        </td>
+
+        <tr v-for="bookmark in filteredBookmarkLists">
+          <td 
+            class="title_bookmark" 
+            @mouseover="hoverEdit = true" 
+            @mouseleave="hoverEdit = false"> 
+              
+            <img :src = "bookmark? bookmark.getFavIcon():''">
+            <a 
+              href="" 
+              @click="openLink(bookmark.url)">{{ bookmark? bookmark.titletext:"" }}</a> 
+            <!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
             
-          <img :src = "bookmark? bookmark.getFavIcon():''">
-          <a 
-            href="" 
-            @click="openLink(bookmark.url)">{{ bookmark? bookmark.titletext:"" }}</a> 
-          <!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
-          
-          <i 
-            v-show="bookmark? bookmark.isImportant:false" 
-            class="fa fa-star icon_yellow moreControlOpt" 
-            @click="changeImportance(bookmark)"/>
-          
+            <i 
+              v-show="bookmark? bookmark.isImportant:false" 
+              class="fa fa-star icon_yellow moreControlOpt" 
+              @click="changeImportance(bookmark)"/>
+            
 
-            <!-- <i v-show="hoverEdit == true" @click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
-            <i v-show="hoverEdit == true" @click="editBookmarks(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i> -->
-            <!-- <i v-show="hoverEdit == true && !bookmark.isImportant" @click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i> -->
+              <!-- <i v-show="hoverEdit == true" @click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
+              <i v-show="hoverEdit == true" @click="editBookmarks(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i> -->
+              <!-- <i v-show="hoverEdit == true && !bookmark.isImportant" @click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i> -->
 
+          </td>
+          <td class="date_bookmark">
+            {{ bookmark? bookmark.getDate():"" }}
+          </td>
+        </tr>
+        
+      </table>
+    </div>
+
+    <div 
+      v-if="isSearchByDate" 
+      class="bookmark_scrollable">
+      <table>
+        <td 
+          class="bookmarkTitle" 
+          @click="sortType = 'title'; sortReverse = !sortReverse">Title
+          <span 
+            v-show="sortType == 'title' && sortReverse" 
+            class="fa fa-caret-down sortIcon"/>
+          <span 
+            v-show="sortType == 'title' && !sortReverse" 
+            class="fa fa-caret-up sortIcon"/>
         </td>
-        <td class="date_bookmark">
-          {{ bookmark? bookmark.getDate():"" }}
+
+        <td 
+          class="dateAdded" 
+          @click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
+          <span 
+            v-show="sortType == 'dateAdded' && sortReverse" 
+            class="fa fa-caret-down sortIcon"/>
+          <span 
+            v-show="sortType == 'dateAdded' && !sortReverse" 
+            class="fa fa-caret-up sortIcon"/>
         </td>
-      </tr>
-      
-    </table>
+        
+        <tr v-for="bookmark in filteredBookmarkLists">
+          <td 
+            class="title_bookmark" 
+            @mouseover="hoverEdit = true" 
+            @mouseleave="hoverEdit = false"> 
+              
+            <img :src = "bookmark? bookmark.getFavIcon():''">
+            <a 
+              href="" 
+              @click="openLink(bookmark.url)">{{ bookmark? bookmark.titletext:"" }}</a> 
+            
+            <i 
+              v-show="bookmark? bookmark.isImportant:false" 
+              class="fa fa-star icon_yellow moreControlOpt" 
+              @click="changeImportance(bookmark)"/>
+            
+            
+              <!-- <i v-show="hoverEdit == true" @click="deleteBookmark(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
+              <i v-show="hoverEdit == true" @click="editBookmark(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i> -->
+              <!-- <i v-show="hoverEdit == true && !bookmark.isImportant" @click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i> -->
+              
+          </td>
+          <td class="date_bookmark">
+            {{ bookmark? bookmark.getDate():"" }}
+          </td>
+        </tr>
+      </table>
+    </div>  
+
   </div>
-
-  <div 
-    v-if="isSearchByDate" 
-    class="bookmark_scrollable">
-    <table>
-      <td 
-        class="bookmarkTitle" 
-        @click="sortType = 'title'; sortReverse = !sortReverse">Title
-        <span 
-          v-show="sortType == 'title' && sortReverse" 
-          class="fa fa-caret-down sortIcon"/>
-        <span 
-          v-show="sortType == 'title' && !sortReverse" 
-          class="fa fa-caret-up sortIcon"/>
-      </td>
-
-      <td 
-        class="dateAdded" 
-        @click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
-        <span 
-          v-show="sortType == 'dateAdded' && sortReverse" 
-          class="fa fa-caret-down sortIcon"/>
-        <span 
-          v-show="sortType == 'dateAdded' && !sortReverse" 
-          class="fa fa-caret-up sortIcon"/>
-      </td>
-      
-      <tr v-for="bookmark in filteredBookmarkLists">
-        <td 
-          class="title_bookmark" 
-          @mouseover="hoverEdit = true" 
-          @mouseleave="hoverEdit = false"> 
-            
-          <img :src = "bookmark? bookmark.getFavIcon():''">
-          <a 
-            href="" 
-            @click="openLink(bookmark.url)">{{ bookmark? bookmark.titletext:"" }}</a> 
-          
-          <i 
-            v-show="bookmark? bookmark.isImportant:false" 
-            class="fa fa-star icon_yellow moreControlOpt" 
-            @click="changeImportance(bookmark)"/>
-          
-          
-            <!-- <i v-show="hoverEdit == true" @click="deleteBookmark(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
-            <i v-show="hoverEdit == true" @click="editBookmark(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i> -->
-            <!-- <i v-show="hoverEdit == true && !bookmark.isImportant" @click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i> -->
-            
-        </td>
-        <td class="date_bookmark">
-          {{ bookmark? bookmark.getDate():"" }}
-        </td>
-      </tr>
-    </table>
-  </div>  
-
-</div>
 
 </template>
 
 <script>
+
+
+import bookmark from "../models/bookmark";
 
 export default {
   name: 'SearchResult',
@@ -125,12 +128,15 @@ export default {
       type: String,
       required: true
     },
+    text: {
+      type: String,
+      default: ""
+    }
   },
   data() {
     return {
       bookmarkManager: "",
       bookmarkLists: {},
-      searchText: "",
       isSearchByDate: false,
       sortType: 'title',
       sortReverse: false,
@@ -155,14 +161,14 @@ export default {
       if (this.mode == 'title') {
         for (let i = 0; i < num; i++) {
           let filtered_bookmark = this.bookmarkLists[i];
-          if (filtered_bookmark.title.indexOf(this.searchText) != -1) {
+          if (filtered_bookmark.title.indexOf(this.text) != -1) {
             booklists.push(filtered_bookmark);
           }
         }
       } else if (this.mode == 'url') {
         for (let i = 0; i < num; i++) {
           let filtered_bookmark = this.bookmarkLists[i];
-          if (filtered_bookmark.url.indexOf(this.searchText) != -1) {
+          if (filtered_bookmark.url.indexOf(this.text) != -1) {
             booklists.push(filtered_bookmark);
           }
         }
@@ -175,12 +181,9 @@ export default {
   created() {
     this.getBookmarks();
   },
-  mounted() {
-    this.$refs.search.focus();
-  },
   methods: {
     isNotEmpty() {
-      return this.searchText != "";
+      return this.text != "";
     },
     openLink(url) {
       chrome.tabs.create({url: url});
