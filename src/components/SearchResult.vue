@@ -2,8 +2,8 @@
   <div>
     <div 
       v-if="isNotEmpty()" 
-      id="bookmark_scrollable">
-      <table>
+      class="list_scrollable">
+      <table class="search-result-table">
         <td 
           class="bookmarkTitle" 
           @click="sortType = 'title'; sortReverse = !sortReverse">Title
@@ -59,7 +59,7 @@
 
     <div 
       v-if="isSearchByDate" 
-      class="bookmark_scrollable">
+      class="date_scrollable">
       <table>
         <td 
           class="bookmarkTitle" 
@@ -224,7 +224,12 @@ export default {
 </script>
 <style scoped>
 
-.bookmark_scrollable {
+.list_scrollable {
+  max-height: 640px;
+  overflow-x: hidden;
+}
+
+.date_scrollable {
   max-height: 300px;
   overflow-x: hidden;
 }
@@ -234,7 +239,8 @@ export default {
   text-align: center;
   cursor: pointer;
   width: 80%;
-  height: 40px;
+  line-height: 40px;
+  padding: 3px 5px;
 }
 
 .dateAdded {
@@ -248,11 +254,16 @@ export default {
 .title_bookmark {
   border: 1px solid grey;
   width: 80%;
+  padding: 3px 5px;
 }
 
 .title_bookmark:hover {
   background-color: lightblue;
-} 
+}
+
+.title_bookmark img {
+  margin-right: 3px;
+}
 
 .date_bookmark{
   border: 1px solid grey;
@@ -271,6 +282,10 @@ export default {
 
 #search {
   padding-left: 30px;
+}
+
+.search-result-table {
+  width: 100%;
 }
 
 .daterangepicker {

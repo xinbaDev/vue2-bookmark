@@ -17,7 +17,7 @@
           <input 
             ref="search" 
             v-model="searchText" 
-            class="form-control fa"
+            class="search-input form-control fa"
             @keyup="$emit('change', $event.target.value)"
           >
           <i 
@@ -55,6 +55,9 @@ export default {
 
 
 <style scoped>
+.search-input {
+  padding-left: 25px;
+}
 .icon-calendar {
   position: absolute!important;
   z-index: 500;
