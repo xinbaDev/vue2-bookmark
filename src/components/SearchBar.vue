@@ -35,24 +35,34 @@
             class="fa fa-check"/></div></li>
       </div>
       
-      <SearchMode :mode="mode"/>
+      <SearchMode 
+        :mode="mode" 
+        @change="change"/>
+
     </div>
+
+    <SearchResult 
+      :mode="mode" 
+      :text="search_text"/>
   </div>
 </template>
 
 
 <script>
 import SearchMode from "./SearchMode";
+import SearchResult from "./SearchResult";
   
 export default {
   name: 'SearchBar',
   components: {
-    SearchMode
+    SearchMode,
+    SearchResult
   },
   data() {
     return {
       isOpen: false,
-      mode: 'title'
+      mode: 'title',
+      search_text: ""
     };
   },
   methods: {
@@ -67,6 +77,9 @@ export default {
     timeClick() {
       this.mode = 'time';
         this.isOpen = false;
+    },
+    change(value) {
+    	this.search_text = value
     }
   }
 };
