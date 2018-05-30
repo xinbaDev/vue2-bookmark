@@ -1,19 +1,27 @@
 <template>
 
   <div>
-    <table v-show="mode == 'time'">
+    <table 
+      v-if="mode == 'time'" 
+      class="input-table"
+    >
       <td>
         <div 
-          id="reportrange" 
-          class="pull-right bookmark-calendar" >
-          <i class="glyphicon glyphicon-calendar fa fa-calendar"/><span/>
+          ref="reportrange" 
+          class="pull-right bookmark-calendar" 
+          @click="toggle">
+          <i class="glyphicon glyphicon-calendar fa fa-calendar"/>
+          {{ date }}
         </div>
       </td>
     </table>
 
-    <table v-show="mode != 'time'">
+    <table 
+      v-if="mode != 'time'"
+      class="input-table" 
+    >
       <td>
-        <div style="position: relative; width: 575px;">
+        <div style="position: relative">
           <input 
             ref="search" 
             v-model="searchText" 
@@ -39,6 +47,8 @@
 
 <script>
 
+
+
 export default {
   name: 'SearchMode',
   props: {
@@ -46,10 +56,25 @@ export default {
       type: String,
       required: true
     },
+    date: {
+      type: String,
+      default: ""
+    }
+  },
+  data() {
+    return {
+      isOpenCalendar:false
+    };
   },
   mounted() {
     this.$refs.search.focus();
-  }
+  },
+  methods: {
+    toggle() {
+      this.isOpenCalendar = !this.isOpenCalendar;
+      this.$emit('toggleCalendar', this.isOpenCalendar);
+    }
+  },
 };
 </script>
 
@@ -57,7 +82,14 @@ export default {
 <style scoped>
 .search-input {
   padding-left: 25px;
+  margin-left: 2px;
+  margin-top: 1px;
 }
+
+.input-table {
+    width: 99%;
+}
+
 .icon-calendar {
   position: absolute!important;
   z-index: 500;

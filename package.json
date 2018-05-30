@@ -10,7 +10,9 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
-    "vue": "^2.5.11"
+    "fecha": "^2.3.3",
+    "vue": "^2.5.11",
+    "vue-rangedate-picker": "^0.3.4"
   },
   "browserslist": [
     "> 1%",

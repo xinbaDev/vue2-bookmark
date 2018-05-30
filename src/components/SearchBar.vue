@@ -36,50 +36,90 @@
       </div>
       
       <SearchMode 
-        :mode="mode" 
-        @change="change"/>
+        :mode="mode"
+        :date="date"
+        @change="change"
+        @toggleCalendar="toggle"/>
 
     </div>
 
     <SearchResult 
       :mode="mode" 
       :text="search_text"/>
+
+    <VueRangedatePicker 
+      :is-open="openCalendar"
+      @selected="setSelectedDate"
+      @openCal="calendarOpen"/>
+
   </div>
 </template>
 
 
 <script>
+import fecha from 'fecha';
+
 import SearchMode from "./SearchMode";
 import SearchResult from "./SearchResult";
-  
+import VueRangedatePicker from './RangedatePicker';
+
 export default {
   name: 'SearchBar',
   components: {
     SearchMode,
-    SearchResult
+    SearchResult,
+    VueRangedatePicker
   },
   data() {
     return {
       isOpen: false,
       mode: 'title',
-      search_text: ""
+      search_text: "",
+      openCalendar: false,
+      date: ""
     };
   },
   methods: {
     titleClick() {
       this.mode = 'title';
-        this.isOpen = false;
+      this.isOpen = false;
+      this.openCalendar = false;
     },
     urlClick() {
       this.mode = 'url';
-        this.isOpen = false;
+      this.isOpen = false;
+      this.openCalendar = false;
     },
     timeClick() {
       this.mode = 'time';
-        this.isOpen = false;
+      this.isOpen = false;
+      this.openCalendar = true;
     },
     change(value) {
-    	this.search_text = value
+      this.search_text = value;
+    },
+    toggle() {
+      this.openCalendar = !this.openCalendar;
+    },
+    setSelectedDate(value) {
+      let start = this.getDateString(value.start);
+      let end = this.getDateString(value.end);
+      if (start && end) {
+        this.date = start + " " + end;
+      } else {
+        this.date = "";
+      }
+      
+    },
+    getDateString(date, format = this.format) {
+      if (!date) {
+        return null;
+      }
+      const dateparse = new Date(Date.parse(date));
+      return fecha.format(new Date(dateparse.getFullYear(), dateparse.getMonth(), dateparse.getDate() - 1), format);
+    },
+    calendarOpen(value) {
+      this.openCalendar = value;
     }
   }
 };
@@ -89,7 +129,7 @@ export default {
 <style scoped>
 
 .input-group .form-control, .input-group-addon, .input-group-btn {
-    display: table-cell;
+  display: table-cell;
 }
 
 .toggle-menu{
