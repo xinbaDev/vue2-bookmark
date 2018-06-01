@@ -45,7 +45,9 @@
 
     <SearchResult 
       :mode="mode" 
-      :text="search_text"/>
+      :text="search_text"
+      :date-range="dateRange"
+      :is-open="openCalendar"/>
 
     <VueRangedatePicker 
       :is-open="openCalendar"
@@ -76,7 +78,8 @@ export default {
       mode: 'title',
       search_text: "",
       openCalendar: false,
-      date: ""
+      date: "",
+      dateRange: null,
     };
   },
   methods: {
@@ -93,7 +96,7 @@ export default {
     timeClick() {
       this.mode = 'time';
       this.isOpen = false;
-      this.openCalendar = true;
+      this.openCalendar = false;
     },
     change(value) {
       this.search_text = value;
@@ -102,10 +105,15 @@ export default {
       this.openCalendar = !this.openCalendar;
     },
     setSelectedDate(value) {
-      let start = this.getDateString(value.start);
-      let end = this.getDateString(value.end);
-      if (start && end) {
-        this.date = start + " " + end;
+      this.dateRange = value;
+      let startdate = this.getDateString(value.start);
+      let enddate = this.getDateString(value.end);
+      let start_date = startdate.split(" ");
+      let end_date = enddate.split(" ");
+      if (startdate && enddate) {
+        this.date = start_date[3] + " " + start_date[1] + " " + start_date[2] + 
+                    " -- " + 
+                    end_date[3] + " " + end_date[1] + " " + end_date[2];
       } else {
         this.date = "";
       }

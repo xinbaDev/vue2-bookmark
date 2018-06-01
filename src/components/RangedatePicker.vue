@@ -2,7 +2,7 @@
   <div class="calendar-root">
     <!--     <div class="input-date" @click="toggleCalendar()"> {{getDateString(dateRange.start)}} - {{getDateString(dateRange.end)}}</div> -->
     <div 
-      v-if="isOpen" 
+      v-if="isOpenCalendar" 
       :class="{'calendar-mobile ': isCompact, 'calendar-right-to-left': isRighttoLeft}" 
       class="calendar">
       <div 
