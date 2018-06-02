@@ -117,17 +117,9 @@ const availableShortDays = {
 const presetRangeLabel = {
   EN: {
     today: 'Today',
-    thisMonth: 'This Month',
-    lastMonth: 'Last Month',
-    lastSevenSays: 'Last 7 Days',
+    yesterday: 'Yesterday',
+    lastSevenDays: 'Last 7 Days',
     lastThirtyDays: 'Last 30 Days'
-  },
-  ID: {
-    today: 'Hari ini',
-    thisMonth: 'Bulan ini',
-    lastMonth: 'Bulan lalu',
-    lastSevenDays: '7 Hari Terakhir',
-    lastThirtyDays: '30 Hari Terakhir'
   }
 };
 
@@ -151,8 +143,8 @@ const defaultPresets = function (i18n = defaultI18n) {
   return {
     today: function () {
       const n = new Date();
-      const startToday = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1, 0, 0);
-      const endToday = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1, 23, 59);
+      const startToday = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 0, 0);
+      const endToday = new Date(n.getFullYear(), n.getMonth(), n.getDate() + 1, 0, 0);
       return {
         label: presetRangeLabel[i18n].today,
         active: false,
@@ -162,16 +154,16 @@ const defaultPresets = function (i18n = defaultI18n) {
         }
       };
     },
-    thisMonth: function () {
+    yesterday: function () {
       const n = new Date();
-      const startMonth = new Date(n.getFullYear(), n.getMonth(), 2);
-      const endMonth = new Date(n.getFullYear(), n.getMonth() + 1, 1);
+      const startYesterday = new Date(n.getFullYear(), n.getMonth(), n.getDate() - 1, 0, 0);
+      const endToday = new Date(n.getFullYear(), n.getMonth(), n.getDate(), 0, 0);
       return {
-        label: presetRangeLabel[i18n].thisMonth,
+        label: presetRangeLabel[i18n].yesterday,
         active: false,
         dateRange: {
-          start: startMonth,
-          end: endMonth
+          start: startYesterday,
+          end: endToday
         }
       };
     },
