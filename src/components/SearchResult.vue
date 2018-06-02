@@ -26,34 +26,11 @@
             class="fa fa-caret-up sortIcon"/>
         </td>
 
-        <tr v-for="bookmark in filteredBookmarkLists">
-          <td 
-            class="title_bookmark" 
-            @mouseover="hoverEdit = true" 
-            @mouseleave="hoverEdit = false"> 
-              
-            <img :src = "bookmark? bookmark.getFavIcon():''">
-            <a 
-              href="" 
-              @click="openLink(bookmark.url)">{{ bookmark? bookmark.titletext:"" }}</a> 
-            <!-- <i ng-attr-id="{{'moreControlOpt_' + bookmark.getID()}}" class="fa fa-sm fa-caret-square-o-down moreControlOpt"></i> -->
-            
-            <i 
-              v-show="bookmark? bookmark.isImportant:false" 
-              class="fa fa-star icon_yellow moreControlOpt" 
-              @click="changeImportance(bookmark)"/>
-            
-
-              <!-- <i v-show="hoverEdit == true" @click="deleteBookmarks(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
-              <i v-show="hoverEdit == true" @click="editBookmarks(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i> -->
-              <!-- <i v-show="hoverEdit == true && !bookmark.isImportant" @click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i> -->
-
-          </td>
-          <td class="date_bookmark">
-            {{ bookmark? bookmark.getDate():"" }}
-          </td>
-        </tr>
-        
+        <SearchResultList 
+          v-for="bookmark in filteredBookmarkLists"
+          :bookmark="bookmark"
+          :key="bookmark.getID()"
+        />
       </table>
     </div>
 
@@ -85,33 +62,13 @@
             v-show="sortType == 'dateAdded' && !sortReverse" 
             class="fa fa-caret-up sortIcon"/>
         </td>
+
+        <SearchResultList 
+          v-for="bookmark in filteredBookmarkLists"
+          :bookmark="bookmark"
+          :key="bookmark.getID()"
+        />
         
-        <tr v-for="bookmark in filteredBookmarkLists">
-          <td 
-            class="title_bookmark" 
-            @mouseover="hoverEdit = true" 
-            @mouseleave="hoverEdit = false"> 
-              
-            <img :src = "bookmark? bookmark.getFavIcon():''">
-            <a 
-              href="" 
-              @click="openLink(bookmark.url)">{{ bookmark? bookmark.titletext:"" }}</a> 
-            
-            <i 
-              v-show="bookmark? bookmark.isImportant:false" 
-              class="fa fa-star icon_yellow moreControlOpt" 
-              @click="changeImportance(bookmark)"/>
-            
-            
-              <!-- <i v-show="hoverEdit == true" @click="deleteBookmark(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
-              <i v-show="hoverEdit == true" @click="editBookmark(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i> -->
-              <!-- <i v-show="hoverEdit == true && !bookmark.isImportant" @click="changeImportance(bookmark)" class="fa fa-star-o moreControlOpt"> </i> -->
-              
-          </td>
-          <td class="date_bookmark">
-            {{ bookmark? bookmark.getDate():"" }}
-          </td>
-        </tr>
       </table>
     </div>  
 
@@ -123,6 +80,7 @@
 
 
 import bookmark from "../models/bookmark";
+import SearchResultList from "./SearchResultList";
 
 export default {
   name: 'SearchResult',
@@ -144,13 +102,15 @@ export default {
       required: true
     }
   },
+  components: {
+    SearchResultList
+  },
   data() {
     return {
       bookmarkManager: "",
       bookmarkLists: {},
       sortType: 'title',
-      sortReverse: false,
-      hoverEdit: false
+      sortReverse: false
     };
   },
   computed: {
@@ -206,26 +166,6 @@ export default {
     isNotEmpty() {
       return this.text != "";
     },
-    openLink(url) {
-      chrome.tabs.create({url: url});
-    },
-    changeImportance(bookmark) {
-      let id = bookmark.getID();
-
-      if (bookmark.isImportant) {
-        chrome.bookmarkmarks.update(id,{title:bookmark.title});
-      } else {
-        chrome.bookmarkmarks.update(id,{title:bookmark.title + "***"});
-      }
-
-      bookmark.isImportant = !bookmark.isImportant;
-    },
-    /* deleteBookmark(bookmark) {
-
-    },
-    editBookmark(bookmark) {
-
-    }*/
     getBookmarks() {
       let _this = this;
       this.bookmarkManager = new bookmark();
@@ -244,6 +184,8 @@ export default {
 };
 </script>
 <style scoped>
+
+
 
 .list_scrollable {
   max-height: 640px;
@@ -271,35 +213,6 @@ export default {
   width: 20%;
   height: 40px;
 }
-
-.title_bookmark {
-  border: 1px solid grey;
-  width: 80%;
-  padding: 3px 5px;
-}
-
-.title_bookmark:hover {
-  background-color: lightblue;
-}
-
-.title_bookmark img {
-  margin-right: 3px;
-}
-
-.date_bookmark{
-  border: 1px solid grey;
-  text-align: center;
-  width: 20%;
-}
-
-.moreControlOpt{
-  float: right;
-  cursor: pointer;
-}
-
-.moreControlOpt:hover {
-  border: 1px solid grey;
-} 
 
 #search {
   padding-left: 30px;
