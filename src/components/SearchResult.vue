@@ -6,23 +6,23 @@
       <table class="search-result-table">
         <td 
           class="bookmarkTitle" 
-          @click="sortType = 'title'; sortReverse = !sortReverse">Title
+          @click="sortType = 'title'; sortTitleReverse = !sortTitleReverse">Title
           <span 
-            v-show="sortType == 'title' && sortReverse" 
+            v-show="sortType == 'title' && sortTitleReverse" 
             class="fa fa-caret-down sortIcon"/>
           <span 
-            v-show="sortType == 'title' && !sortReverse" 
+            v-show="sortType == 'title' && !sortTitleReverse" 
             class="fa fa-caret-up sortIcon"/>
         </td>
 
         <td 
           class="dateAdded" 
-          @click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
+          @click="sortType = 'dateAdded'; sortDateReverse = !sortDateReverse">DateAdded
           <span 
-            v-show="sortType == 'dateAdded' && sortReverse" 
+            v-show="sortType == 'dateAdded' && sortDateReverse" 
             class="fa fa-caret-down sortIcon"/>
           <span 
-            v-show="sortType == 'dateAdded' && !sortReverse" 
+            v-show="sortType == 'dateAdded' && !sortDateReverse" 
             class="fa fa-caret-up sortIcon"/>
         </td>
 
@@ -43,23 +43,23 @@
       >
         <td 
           class="bookmarkTitle" 
-          @click="sortType = 'title'; sortReverse = !sortReverse">Title
+          @click="sortType = 'title'; sortTitleReverse = !sortTitleReverse">Title
           <span 
-            v-show="sortType == 'title' && sortReverse" 
+            v-show="sortType == 'title' && !sortTitleReverse" 
             class="fa fa-caret-down sortIcon"/>
           <span 
-            v-show="sortType == 'title' && !sortReverse" 
+            v-show="sortType == 'title' && sortTitleReverse" 
             class="fa fa-caret-up sortIcon"/>
         </td>
 
         <td 
           class="dateAdded" 
-          @click="sortType = 'dateAdded'; sortReverse = !sortReverse">DateAdded
+          @click="sortType = 'dateAdded'; sortDateReverse = !sortDateReverse">DateAdded
           <span 
-            v-show="sortType == 'dateAdded' && sortReverse" 
+            v-show="sortType == 'dateAdded' && !sortDateReverse" 
             class="fa fa-caret-down sortIcon"/>
           <span 
-            v-show="sortType == 'dateAdded' && !sortReverse" 
+            v-show="sortType == 'dateAdded' && sortDateReverse" 
             class="fa fa-caret-up sortIcon"/>
         </td>
 
@@ -84,6 +84,9 @@ import SearchResultList from "./SearchResultList";
 
 export default {
   name: 'SearchResult',
+  components: {
+    SearchResultList
+  },
   props: {
     mode: {
       type: String,
@@ -102,15 +105,13 @@ export default {
       required: true
     }
   },
-  components: {
-    SearchResultList
-  },
   data() {
     return {
       bookmarkManager: "",
       bookmarkLists: {},
-      sortType: 'title',
-      sortReverse: false
+      sortType: 'date',
+      sortDateReverse: true,
+      sortTitleReverse: false
     };
   },
   computed: {
@@ -156,6 +157,34 @@ export default {
           }
         }
       }
+
+      function sort(a, b, titleReverse, dateReserve, type) {
+        if (b.isImportant > a.isImportant) {
+          return 1;
+        } else if (b.isImportant < a.isImportant) {
+          return -1;
+        } else {
+          if (type == "title") {
+            if (titleReverse) {
+              return (b.title > a.title) ? 1 : -1;
+            } else {
+              return (a.title > b.title) ? 1 : -1;
+            }
+          } else {
+            if (dateReserve) {
+              return (b.dateAdded > a.dateAdded) ? 1 : -1;
+            } else {
+              return (a.dateAdded > b.dateAdded) ? 1 : -1;
+            }
+          }
+        }
+      }
+
+      let that = this;
+      booklists.sort(function(a, b) {
+        return sort(a, b, that.sortTitleReverse, that.sortDateReverse, that.sortType);
+      });
+ 
       return booklists;
     }
   },
