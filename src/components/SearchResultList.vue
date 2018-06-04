@@ -9,21 +9,30 @@
       <a 
         href="" 
         @click="openLink(bookmark.url)">{{ bookmark? bookmark.titletext:"" }}</a> 
-      
+
       <i 
         v-show="bookmark? bookmark.isImportant:false" 
         class="fa fa-star icon_yellow moreControlOpt" 
         @click="changeImportance(bookmark)"/>
-      
-      
-        <!-- <i v-show="hoverEdit == true" @click="deleteBookmark(bookmark.getID())" class="fa fa-sm fa-trash moreControlOpt"></i>
-        <i v-show="hoverEdit == true" @click="editBookmark(bookmark.getID(),bookmark.title)" class="fa fa-sm fa-edit moreControlOpt"></i> -->
+
+      <i 
+        v-show="hoverEdit == true" 
+        class="fa fa-sm fa-trash moreControlOpt"
+        @click="deleteBookmark(bookmark.getID())" 
+      />
+
+      <i 
+        v-show="hoverEdit == true" 
+        class="fa fa-sm fa-edit moreControlOpt"
+        @click="editBookmark(bookmark.getID(), bookmark.title)" 
+      />
+
       <i 
         v-show="hoverEdit == true && !bookmark.isImportant"
         class="fa fa-star-o moreControlOpt"
         @click="changeImportance(bookmark)" 
       />
-        
+
     </td>
     <td class="date_bookmark">
       {{ bookmark? bookmark.getDate():"" }}
@@ -32,6 +41,7 @@
 </template>
 
 <script>
+
 export default {
   name: 'SearchResultList',
   props: {
@@ -60,12 +70,12 @@ export default {
 
       bookmark.isImportant = !bookmark.isImportant;
     },
-    /* deleteBookmark(bookmark) {
-
+    deleteBookmark(bookmark_id) {
+      this.$emit('delete', bookmark_id);
     },
-    editBookmark(bookmark) {
-
-    }*/
+    editBookmark(bookmark_id, title) {
+      this.$emit('edit', bookmark_id, title);
+    }
   }
 };
 

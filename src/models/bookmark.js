@@ -4,7 +4,6 @@ class Bookmark {
     this.bookObjList = [];
     this.bookGroup = [];
     this.importance_mark = "***";
-    console.log("bookmark init");
   }
 
   getBookmarks(booklists) {
@@ -20,17 +19,19 @@ class Bookmark {
   }
 
   deleteBookmarks(id) {
+    let _this = this;
     this.bookObjList.forEach(function(d,i) {
       if (d.id == id) {
-        this.bookObjList.splice(i,1);
+        _this.bookObjList.splice(i,1);
       }
     });
   }
 
   editBookmarks(id,newTitle) {
+    let _this = this;
     this.bookObjList.forEach(function(d,i) {
       if (d.id == id) {
-        this.bookObjList[i].title = newTitle;
+        _this.bookObjList[i].title = newTitle;
       }
     });
   }

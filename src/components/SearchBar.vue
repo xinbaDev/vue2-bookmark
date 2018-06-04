@@ -61,6 +61,7 @@
 <script>
 import fecha from 'fecha';
 
+
 import SearchMode from "./SearchMode";
 import SearchResult from "./SearchResult";
 import VueRangedatePicker from './RangedatePicker';
@@ -79,7 +80,7 @@ export default {
       search_text: "",
       openCalendar: false,
       date: "",
-      dateRange: null,
+      dateRange: null
     };
   },
   methods: {

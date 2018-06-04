@@ -1,5 +1,17 @@
 <template>
   <div>
+
+    <DeleteModal 
+      v-if="showDeleteModal" 
+      @close="handleDelete"
+    />
+
+    <EditModal 
+      v-if="showEditModal" 
+      :title='title'
+      @close="handleEdit"
+    />
+
     <div 
       v-if="isNotEmpty() && !isSearchByDate" 
       class="list_scrollable">
@@ -30,6 +42,8 @@
           v-for="bookmark in filteredBookmarkLists"
           :bookmark="bookmark"
           :key="bookmark.getID()"
+          @delete="deleteBookmark"
+          @edit="editBookmark"
         />
       </table>
     </div>
@@ -67,6 +81,8 @@
           v-for="bookmark in filteredBookmarkLists"
           :bookmark="bookmark"
           :key="bookmark.getID()"
+          @delete="deleteBookmark"
+          @edit="editBookmark"
         />
         
       </table>
@@ -78,14 +94,17 @@
 
 <script>
 
-
+import EditModal from "./EditModal";
+import DeleteModal from "./DeleteModal";
 import bookmark from "../models/bookmark";
 import SearchResultList from "./SearchResultList";
 
 export default {
   name: 'SearchResult',
   components: {
-    SearchResultList
+    SearchResultList,
+    DeleteModal,
+    EditModal
   },
   props: {
     mode: {
@@ -111,7 +130,10 @@ export default {
       bookmarkLists: {},
       sortType: 'date',
       sortDateReverse: true,
-      sortTitleReverse: false
+      sortTitleReverse: false,
+      showDeleteModal: false,
+      showEditModal: false,
+      title:""
     };
   },
   computed: {
@@ -196,17 +218,39 @@ export default {
       return this.text != "";
     },
     getBookmarks() {
-      let _this = this;
       this.bookmarkManager = new bookmark();
-      console.log(this.bookmarkManager);
 
       if (this.bookmarkManager.numOfBooks() == 0) {
         chrome.bookmarks.getTree(getBookmarksCallback);
       }
 
+      let _this = this;
       function getBookmarksCallback(booklist) {
         _this.bookmarkManager.getBookmarks(booklist);
         _this.bookmarkLists = _this.bookmarkManager.returnBookmarks();
+      }
+    },
+    deleteBookmark(bookmark_id) {
+      this.bookmark_id = bookmark_id;
+      this.showDeleteModal = true;
+    },
+    handleDelete(result) {
+      this.showDeleteModal = false;
+      if (result != 'cancel') {
+        this.bookmarkManager.deleteBookmarks(this.bookmark_id);
+        chrome.bookmarks.remove(this.bookmark_id);
+      }
+    },
+    editBookmark(bookmark_id, title) {
+      this.bookmark_id = bookmark_id;
+      this.title = title;
+      this.showEditModal = true;
+    },
+    handleEdit(result, mod_title) {
+      this.showEditModal = false;
+      if (result != 'cancel') {
+        this.bookmarkManager.editBookmarks(this.bookmark_id, mod_title);
+        chrome.bookmarks.update(this.bookmark_id, {title:mod_title});
       }
     }
   },
