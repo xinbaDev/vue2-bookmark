@@ -39,9 +39,9 @@
         </td>
 
         <SearchResultList 
-          v-for="bookmark in filteredBookmarkLists"
-          :bookmark="bookmark"
-          :key="bookmark.getID()"
+          v-for="bookmarkgroup in filteredBookmarkListsV2"
+          :bookmarkgroup="bookmarkgroup"
+          :key="bookmarkgroup['group']"
           @delete="deleteBookmark"
           @edit="editBookmark"
         />
@@ -133,7 +133,8 @@ export default {
       sortTitleReverse: false,
       showDeleteModal: false,
       showEditModal: false,
-      title:""
+      title:"",
+      bookgroup: {}
     };
   },
   computed: {
@@ -208,6 +209,51 @@ export default {
       });
  
       return booklists;
+    },
+    filteredBookmarkListsV2() {
+      let booklists = [];
+      let num = this.bookmarkManager.numOfBooks();
+      if (this.mode == 'title') {
+        for (let i = 0; i < num; i++) {
+          let filtered_bookmark = this.bookmarkLists[i];
+          if (filtered_bookmark.title.indexOf(this.text) != -1) {
+            booklists.push(filtered_bookmark);
+          }
+        }
+      } else if (this.mode == 'url') {
+        for (let i = 0; i < num; i++) {
+          let filtered_bookmark = this.bookmarkLists[i];
+          if (filtered_bookmark.url.indexOf(this.text) != -1) {
+            booklists.push(filtered_bookmark);
+          }
+        }
+      } else {
+        if (this.dateRange == null) {
+          return [];
+        }
+        for (let i = 0; i < num; i++) {
+          let filtered_bookmark = this.bookmarkLists[i];
+          if ((this.dateRange.start < filtered_bookmark.dateAdded) && (filtered_bookmark.dateAdded < this.dateRange.end)) {
+            booklists.push(filtered_bookmark);
+          }
+        }
+      }
+
+      //remove existing bookmarks
+      for (const book in this.bookgroup) {
+        this.bookgroup[book]['children'] = [];
+      }
+      
+      for (let i = 0; i < booklists.length; i++) {
+        this.bookgroup[booklists[i].parentId]['children'].push(booklists[i]);
+      }
+
+      let books = [];
+      for (let group in this.bookgroup) {
+        books.push({'group':group, 'children':this.bookgroup[group]['children']})
+      }
+
+      return books;
     }
   },
   created() {
@@ -229,6 +275,8 @@ export default {
         _this.bookmarkManager.getBookmarks(booklist);
         _this.bookmarkLists = _this.bookmarkManager.returnBookmarks();
       }
+
+      this.bookgroup = this.bookmarkManager.returnBookGroup();
     },
     deleteBookmark(bookmark_id) {
       this.bookmark_id = bookmark_id;
