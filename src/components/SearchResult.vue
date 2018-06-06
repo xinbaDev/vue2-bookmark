@@ -8,7 +8,7 @@
 
     <EditModal 
       v-if="showEditModal" 
-      :title='title'
+      :title="title"
       @close="handleEdit"
     />
 
@@ -37,22 +37,22 @@
             v-show="sortType == 'dateAdded' && !sortDateReverse" 
             class="fa fa-caret-up sortIcon"/>
         </td>
-
-        <SearchResultList 
-          v-for="bookmarkgroup in filteredBookmarkListsV2"
-          :bookmarkgroup="bookmarkgroup"
-          :key="bookmarkgroup['group']"
-          @delete="deleteBookmark"
-          @edit="editBookmark"
-        />
       </table>
+
+      <SearchResultList 
+        v-for="bookmarkgroup in filteredBookmarkListsV2"
+        :bookmarkgroup="bookmarkgroup"
+        :key="bookmarkgroup['group']"
+      />
+
     </div>
 
     <div 
       v-if="isSearchByDate" 
-      class="date_scrollable">
+      v-show="dateRange != null && isOpen == false"
+      class="date_scrollable" 
+    >
       <table
-        v-show="dateRange != null && isOpen == false"
         class="search-result-table"
       >
         <td 
@@ -76,16 +76,14 @@
             v-show="sortType == 'dateAdded' && sortDateReverse" 
             class="fa fa-caret-up sortIcon"/>
         </td>
-
-        <SearchResultList 
-          v-for="bookmark in filteredBookmarkLists"
-          :bookmark="bookmark"
-          :key="bookmark.getID()"
-          @delete="deleteBookmark"
-          @edit="editBookmark"
-        />
-        
       </table>
+
+      <SearchResultList 
+        v-for="bookmarkgroup in filteredBookmarkListsV2"
+        :bookmarkgroup="bookmarkgroup"
+        :key="bookmarkgroup['group']"
+      />
+
     </div>  
 
   </div>
@@ -98,6 +96,7 @@ import EditModal from "./EditModal";
 import DeleteModal from "./DeleteModal";
 import bookmark from "../models/bookmark";
 import SearchResultList from "./SearchResultList";
+import { eventBus } from '../main';
 
 export default {
   name: 'SearchResult',
@@ -250,7 +249,13 @@ export default {
 
       let books = [];
       for (let group in this.bookgroup) {
-        books.push({'group':group, 'children':this.bookgroup[group]['children']})
+        let children = this.bookgroup[group]['children'];
+        if (children.length > 0) {
+          books.push({
+            'title':this.bookgroup[group]['title'], 
+            'children':this.bookgroup[group]['children']
+          });
+        }
       }
 
       return books;
@@ -258,6 +263,13 @@ export default {
   },
   created() {
     this.getBookmarks();
+    eventBus.$on('edit', (bookmark_id, title) => {
+      this.editBookmark(bookmark_id, title);
+    });
+
+    eventBus.$on('delete', (bookmark_id) => {
+      this.deleteBookmark(bookmark_id);
+    });
   },
   methods: {
     isNotEmpty() {
