@@ -140,17 +140,6 @@ export default {
     isSearchByDate() {
       return this.mode == 'time';
     },
-    numberOfBookMarks() {
-      if (this.bookmarkManager) {
-        let num = this.bookmarkManager.numOfBooks();
-        if (num <= 1) {
-          return "Search in your bookmarks";
-        } else {
-          return "Search in your " + num + " bookmarks";
-        }
-      }
-      return "Search in your bookmarks";
-    },
     filteredBookmarkLists() {
       let booklists = [];
       let num = this.bookmarkManager.numOfBooks();
@@ -286,6 +275,7 @@ export default {
       function getBookmarksCallback(booklist) {
         _this.bookmarkManager.getBookmarks(booklist);
         _this.bookmarkLists = _this.bookmarkManager.returnBookmarks();
+        eventBus.$emit('numofbookmark', _this.bookmarkManager.numOfBooks());
       }
 
       this.bookgroup = this.bookmarkManager.returnBookGroup();

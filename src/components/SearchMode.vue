@@ -26,6 +26,7 @@
             ref="search" 
             v-model="searchText" 
             class="search-input form-control fa"
+            :placeholder="showNumOfBookmark()"
             @keyup="$emit('change', $event.target.value)"
           >
           <i 
@@ -47,7 +48,7 @@
 
 <script>
 
-
+import { eventBus } from '../main';
 
 export default {
   name: 'SearchMode',
@@ -63,16 +64,29 @@ export default {
   },
   data() {
     return {
-      isOpenCalendar:false
+      isOpenCalendar: false,
+      numofbookmark: ""
     };
   },
   mounted() {
     this.$refs.search.focus();
   },
+  created() {
+    eventBus.$on('numofbookmark', (num) => {
+      this.numofbookmark = num;
+    });
+  },
   methods: {
     toggle() {
       this.isOpenCalendar = !this.isOpenCalendar;
       this.$emit('toggleCalendar', this.isOpenCalendar);
+    },
+    showNumOfBookmark() {
+      if (this.numofbookmark <= 1) {
+        return "Search in your bookmarks";
+      } else {
+        return "Search in your " + this.numofbookmark + " bookmarks";
+      }
     }
   },
 };
