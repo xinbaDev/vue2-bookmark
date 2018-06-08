@@ -85,8 +85,8 @@
 
 <script>
 
-import EditModal from "./EditModal";
-import DeleteModal from "./DeleteModal";
+import EditModal from "./Modal/EditModal";
+import DeleteModal from "./Modal/DeleteModal";
 import bookmark from "../models/bookmark";
 import SearchResultList from "./SearchResultList";
 import { eventBus } from '../main';
