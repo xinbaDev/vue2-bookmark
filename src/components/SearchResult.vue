@@ -228,7 +228,7 @@ export default {
       if (this.mode == 'title') {
         for (let i = 0; i < num; i++) {
           let filtered_bookmark = this.bookmarkLists[i];
-          if (filtered_bookmark.title.indexOf(this.text) != -1) {
+          if (filtered_bookmark.title.toLowerCase().indexOf(this.text) != -1) {
             booklists.push(filtered_bookmark);
           }
         }
