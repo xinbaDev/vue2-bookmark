@@ -4,31 +4,12 @@
     <div class="modal-wrapper">
       <div class="modal-container">
 
-        <div class="modal-header">
-          <slot name="header">
-            Delete bookmark
-          </slot>
+        <div class="modal-body">
+          <slot name="body"/>
         </div>
 
-<!--         <div class="modal-body">
-          <slot name="body">
-
-          </slot>
-        </div> -->
-
         <div class="modal-footer">
-          <slot name="footer">
-            <button 
-              class="modal-default-button" 
-              @click="$emit('close','delete')">
-              Delete
-            </button>
-            <button 
-              class="modal-default-button" 
-              @click="$emit('close', 'cancel')">
-              Cancel
-            </button>
-          </slot>
+          <slot name="footer"/>
         </div>
       </div>
     </div>
@@ -39,7 +20,18 @@
 <script>
 
 export default {
-  name: 'DeleteModal'
+  name: 'Modal',
+  props: {
+    title: {
+      type: String,
+      required: true
+    }
+  },
+  data() {
+    return {
+      mod_title: this.title
+    };
+  }
 };
 
 </script>
@@ -64,7 +56,7 @@ export default {
 }
 
 .modal-container {
-  width: 300px;
+  width: 80%;
   margin: 0px auto;
   padding: 20px 30px;
   background-color: #fff;
@@ -81,10 +73,6 @@ export default {
 
 .modal-body {
   margin: 20px 0;
-}
-
-.modal-default-button {
-  float: right;
 }
 
 .modal-enter {

@@ -1,14 +1,47 @@
 <template>
 
   <div>
-    <DeleteModal 
-      v-if="showDeleteModal" 
-      @close="handleDelete"/>
+    <Modal v-if="showDeleteModal">
 
-    <EditModal 
-      v-if="showEditModal" 
-      :title="title"
-      @close="handleEdit"/>
+      <template slot="body">
+        Delete bookmark
+      </template>
+
+      <template slot="footer">
+        <button 
+          class="btn btn-danger" 
+          @click="handleDelete('delete')">
+          Delete
+        </button>
+        <button 
+          class="btn btn-secondary" 
+          @click="handleDelete('cancel')">
+          Cancel
+        </button>
+      </template>
+
+    </Modal>
+
+    <Modal v-if="showEditModal">
+
+      <template slot="body">
+        New Title: <input v-model="title">
+      </template>
+
+      <template slot="footer">
+        <button 
+          class="btn btn-primary" 
+          @click="handleEdit('edit',title)">
+          Edit
+        </button>
+        <button 
+          class="btn btn-secondary" 
+          @click="handleEdit('cancel')">
+          Cancel
+        </button>
+      </template>
+
+    </Modal>
 
     <div 
       v-if="isNotEmpty() && !isSearchByDate" 
@@ -85,8 +118,7 @@
 
 <script>
 
-import EditModal from "./Modal/EditModal";
-import DeleteModal from "./Modal/DeleteModal";
+import Modal from "./Modal/Modal";
 import bookmark from "../models/bookmark";
 import SearchResultList from "./SearchResultList";
 import { eventBus } from '../main';
@@ -95,8 +127,7 @@ export default {
   name: 'SearchResult',
   components: {
     SearchResultList,
-    DeleteModal,
-    EditModal
+    Modal
   },
   props: {
     mode: {
@@ -336,6 +367,10 @@ export default {
 
 .search-result-table {
   width: 100%;
+}
+
+input {
+  width: 80%;
 }
 
 </style>
