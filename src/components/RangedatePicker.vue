@@ -456,6 +456,7 @@ export default {
       this.activeMonthStart = this.dateRange.start.getMonth();
       this.activeYearStart = this.dateRange.start.getFullYear();
       this.activeYearEnd = this.dateRange.end.getFullYear();
+      this.setDateValue();
     },
     setDateValue: function () {
       //this.toggleCalendar()
