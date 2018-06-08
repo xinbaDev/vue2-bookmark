@@ -282,6 +282,7 @@ export default {
       if (result != 'cancel') {
         this.bookmarkManager.deleteBookmarks(this.bookmark_id);
         chrome.bookmarks.remove(this.bookmark_id);
+        eventBus.$emit('numofbookmark', this.bookmarkManager.numOfBooks());
       }
     },
     editBookmark(bookmark_id, title) {
