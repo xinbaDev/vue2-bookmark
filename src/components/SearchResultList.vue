@@ -35,11 +35,16 @@ export default {
 <style scoped>
 .folder {
   padding-left: 5px;
+  color: #fbc80d;
 }
 
 .folder-bar {
   line-height: 30px;
   height: 30px;
+  background-color: #e8f3e8!important;;
+  border-left: 4px solid #ccc!important;
+  border-color: #2196F3!important;
+  border-right: 1px solid;
 }
 
 </style>

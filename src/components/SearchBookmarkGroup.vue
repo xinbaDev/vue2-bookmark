@@ -102,6 +102,7 @@ export default {
   width: 80%;
   padding: 3px 5px;
   padding-left: 20px;
+  border-left: 4px solid #ff7818;
 }
 
 .title_bookmark:hover {
