@@ -1,4 +1,5 @@
 <template>
+
   <div>
     <div class="input-group">
 
@@ -55,13 +56,13 @@
       @openCal="calendarOpen"/>
 
   </div>
+
 </template>
 
 
 <script>
+
 import fecha from 'fecha';
-
-
 import SearchMode from "./SearchMode";
 import SearchResult from "./SearchResult";
 import VueRangedatePicker from './RangedatePicker';

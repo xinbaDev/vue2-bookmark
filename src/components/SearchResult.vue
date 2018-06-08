@@ -1,16 +1,14 @@
 <template>
-  <div>
 
+  <div>
     <DeleteModal 
       v-if="showDeleteModal" 
-      @close="handleDelete"
-    />
+      @close="handleDelete"/>
 
     <EditModal 
       v-if="showEditModal" 
       :title="title"
-      @close="handleEdit"
-    />
+      @close="handleEdit"/>
 
     <div 
       v-if="isNotEmpty() && !isSearchByDate" 
@@ -42,19 +40,16 @@
       <SearchResultList 
         v-for="bookmarkgroup in filteredBookmarkListsV2"
         :bookmarkgroup="bookmarkgroup"
-        :key="bookmarkgroup['group']"
-      />
+        :key="bookmarkgroup['group']"/>
 
     </div>
 
     <div 
       v-if="isSearchByDate" 
       v-show="dateRange != null && isOpen == false"
-      class="date_scrollable" 
-    >
+      class="date_scrollable">
       <table
-        class="search-result-table"
-      >
+        class="search-result-table">
         <td 
           class="bookmarkTitle" 
           @click="sortType = 'title'; sortTitleReverse = !sortTitleReverse">Title
@@ -81,11 +76,9 @@
       <SearchResultList 
         v-for="bookmarkgroup in filteredBookmarkListsV2"
         :bookmarkgroup="bookmarkgroup"
-        :key="bookmarkgroup['group']"
-      />
+        :key="bookmarkgroup['group']"/>
 
     </div>  
-
   </div>
 
 </template>
@@ -306,9 +299,8 @@ export default {
   },
 };
 </script>
+
 <style scoped>
-
-
 
 .list_scrollable {
   max-height: 640px;

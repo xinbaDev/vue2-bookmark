@@ -1,4 +1,5 @@
 <template>
+
   <div class="modal-mask">
     <div class="modal-wrapper">
       <div class="modal-container">
@@ -26,6 +27,7 @@
       </div>
     </div>
   </div>
+
 </template>
 
 <script>
@@ -103,4 +105,5 @@ export default {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
+
 </style>

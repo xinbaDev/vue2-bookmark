@@ -3,8 +3,7 @@
   <div>
     <table 
       v-if="mode == 'time'" 
-      class="input-table"
-    >
+      class="input-table">
       <td>
         <div 
           ref="reportrange" 
@@ -18,8 +17,7 @@
 
     <table 
       v-if="mode != 'time'"
-      class="input-table" 
-    >
+      class="input-table">
       <td>
         <div style="position: relative">
           <input 
@@ -27,8 +25,7 @@
             v-model="searchText" 
             class="search-input form-control fa"
             :placeholder="showNumOfBookmark()"
-            @keyup="$emit('change', $event.target.value)"
-          >
+            @keyup="$emit('change', $event.target.value)">
           <i 
             v-if="mode == 'title'" 
             class="icon-bookmark fa fa-bookmark"/>
@@ -44,7 +41,6 @@
   </div>
 
 </template>
-
 
 <script>
 
@@ -90,10 +86,11 @@ export default {
     }
   },
 };
+
 </script>
 
-
 <style scoped>
+
 .search-input {
   padding-left: 25px;
   margin-left: 2px;

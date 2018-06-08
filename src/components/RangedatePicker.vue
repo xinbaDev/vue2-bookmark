@@ -1,4 +1,5 @@
 <template>
+
   <div class="calendar-root">
     <!--     <div class="input-date" @click="toggleCalendar()"> {{getDateString(dateRange.start)}} - {{getDateString(dateRange.end)}}</div> -->
     <div 
@@ -94,6 +95,7 @@
       
     </div>
   </div>
+
 </template>
 
 <script>
@@ -463,11 +465,10 @@ export default {
   }
 };
 
-
-
 </script>
 
 <style lang="css" scoped>
+
 .input-date {
   display: block;
   border: 1px solid #ccc;
@@ -665,4 +666,5 @@ li.calendar_days_in-range {
   padding: 5px;
   font-size: 14px;
 }
+
 </style>

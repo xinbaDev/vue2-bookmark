@@ -1,10 +1,11 @@
 <template>
+
   <tr>
     <td 
       class="title_bookmark" 
       @mouseover="hoverEdit = true" 
-      @mouseleave="hoverEdit = false"
-    > 
+      @mouseleave="hoverEdit = false">
+       
       <img :src = "bookmark? bookmark.getFavIcon():''">
       <a 
         href="" 
@@ -18,27 +19,24 @@
       <i 
         v-show="hoverEdit == true" 
         class="fa fa-sm fa-trash moreControlOpt"
-        @click="deleteBookmark(bookmark.getID())" 
-      />
+        @click="deleteBookmark(bookmark.getID())"/>
 
       <i 
         v-show="hoverEdit == true" 
         class="fa fa-sm fa-edit moreControlOpt"
-        @click="editBookmark(bookmark.getID(), bookmark.title)" 
-      />
+        @click="editBookmark(bookmark.getID(), bookmark.title)"/>
 
       <i 
         v-show="hoverEdit == true && !bookmark.isImportant"
         class="fa fa-star-o moreControlOpt"
-        @click="changeImportance(bookmark)" 
-      />
+        @click="changeImportance(bookmark)"/>
 
     </td>
     <td class="date_bookmark">
       {{ bookmark? bookmark.getDate():"" }}
     </td>
-
   </tr>
+
 </template>
 
 <script>

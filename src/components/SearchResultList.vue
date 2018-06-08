@@ -8,11 +8,9 @@
     <SearchBookmarkGroup 
       v-for="bookmark in bookmarkgroup['children']"
       :bookmark="bookmark"
-      :key="bookmark.getID()"
-    />
+      :key="bookmark.getID()"/>
   </div>
   
-
 </template>
 
 <script>
@@ -33,7 +31,6 @@ export default {
 };
 
 </script>
-
 
 <style scoped>
 .folder {
