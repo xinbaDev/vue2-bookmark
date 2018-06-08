@@ -251,6 +251,28 @@ export default {
         }
       }
 
+      function sort(a, b, titleReverse, dateReserve, type) {
+        if (b.isImportant > a.isImportant) {
+          return 1;
+        } else if (b.isImportant < a.isImportant) {
+          return -1;
+        } else {
+          if (type == "title") {
+            if (titleReverse) {
+              return (b.title > a.title) ? 1 : -1;
+            } else {
+              return (a.title > b.title) ? 1 : -1;
+            }
+          } else {
+            if (dateReserve) {
+              return (b.dateAdded > a.dateAdded) ? 1 : -1;
+            } else {
+              return (a.dateAdded > b.dateAdded) ? 1 : -1;
+            }
+          }
+        }
+      }
+
       //remove existing bookmarks
       for (const book in this.bookgroup) {
         this.bookgroup[book]['children'] = [];
@@ -261,12 +283,17 @@ export default {
       }
 
       let books = [];
+      let that = this;
       for (let group in this.bookgroup) {
         let children = this.bookgroup[group]['children'];
         if (children.length > 0) {
+
+          children.sort(function(a, b) {
+            return sort(a, b, that.sortTitleReverse, that.sortDateReverse, that.sortType);
+          });
           books.push({
             'title':this.bookgroup[group]['title'], 
-            'children':this.bookgroup[group]['children']
+            'children':children
           });
         }
       }
