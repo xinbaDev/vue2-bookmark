@@ -286,6 +286,7 @@ export default {
       let that = this;
       for (let group in this.bookgroup) {
         let children = this.bookgroup[group]['children'];
+
         if (children.length > 0) {
 
           children.sort(function(a, b) {
@@ -293,7 +294,8 @@ export default {
           });
           books.push({
             'title':this.bookgroup[group]['title'], 
-            'children':children
+            'children':children,
+            'count':children.length
           });
         }
       }
