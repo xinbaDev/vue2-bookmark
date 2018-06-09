@@ -8,7 +8,7 @@
       <i 
         :class="[openFolder ? 'fa-folder-open' : 'fa-folder']"
         class="folder fa"/> 
-      {{ bookmarkgroup['title'] }} ({{ bookmarkgroup['count'] }} bookmarks found)
+      {{ bookmarkgroup['title'] }} ({{ bookmarkgroup['count'] }} found)
     </div>
     
     <!-- <transition name="slide"> -->
@@ -68,6 +68,10 @@ export default {
   border-color: #2196F3;
   border-right: 1px solid;
   cursor: pointer;
+}
+
+.folder-bar:hover {
+  background-color: #82bd82;
 }
 
 .folder-bar-close {
