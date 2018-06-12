@@ -66,6 +66,7 @@ import fecha from 'fecha';
 import SearchMode from "./SearchMode";
 import SearchResult from "./SearchResult";
 import VueRangedatePicker from './RangedatePicker';
+import { eventBus } from '../main';
 
 export default {
   name: 'SearchBar',
@@ -89,16 +90,19 @@ export default {
       this.mode = 'title';
       this.isOpen = false;
       this.openCalendar = false;
+      eventBus.$emit('change_search_mode', 'title');
     },
     urlClick() {
       this.mode = 'url';
       this.isOpen = false;
       this.openCalendar = false;
+      eventBus.$emit('change_search_mode', 'url');
     },
     timeClick() {
       this.mode = 'time';
       this.isOpen = false;
       this.openCalendar = false;
+      eventBus.$emit('change_search_mode', 'time');
     },
     change(value) {
       this.search_text = value;

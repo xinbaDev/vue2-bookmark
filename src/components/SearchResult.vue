@@ -44,6 +44,13 @@
     </Modal>
 
     <div 
+      v-if="showOpenAll">
+      <SearchOperation
+        class="search_operation"
+        @operation="handleOperation"/>
+    </div>
+
+    <div 
       v-if="isNotEmpty() && !isSearchByDate" 
       class="list_scrollable">
       <table class="search-result-table">
@@ -121,13 +128,15 @@
 import Modal from "./Modal/Modal";
 import bookmark from "../models/bookmark";
 import SearchResultList from "./SearchResultList";
+import SearchOperation from "./SearchOperation";
 import { eventBus } from '../main';
 
 export default {
   name: 'SearchResult',
   components: {
     SearchResultList,
-    Modal
+    Modal,
+    SearchOperation
   },
   props: {
     mode: {
@@ -157,28 +166,36 @@ export default {
       showDeleteModal: false,
       showEditModal: false,
       title:"",
-      bookgroup: {}
+      bookgroup: {},
+      booklists: []
     };
   },
   computed: {
     isSearchByDate() {
       return this.mode == 'time';
     },
+    showOpenAll() {
+      if ((this.booklists.length < 10) && (this.booklists.length > 0)) {
+        return true;
+      } else {
+        return false;
+      }
+    },
     filteredBookmarkLists() {
-      let booklists = [];
+      this.booklists = [];
       let num = this.bookmarkManager.numOfBooks();
       if (this.mode == 'title') {
         for (let i = 0; i < num; i++) {
           let filtered_bookmark = this.bookmarkLists[i];
           if (filtered_bookmark.title.indexOf(this.text) != -1) {
-            booklists.push(filtered_bookmark);
+            this.booklists.push(filtered_bookmark);
           }
         }
       } else if (this.mode == 'url') {
         for (let i = 0; i < num; i++) {
           let filtered_bookmark = this.bookmarkLists[i];
           if (filtered_bookmark.url.indexOf(this.text) != -1) {
-            booklists.push(filtered_bookmark);
+            this.booklists.push(filtered_bookmark);
           }
         }
       } else {
@@ -188,7 +205,7 @@ export default {
         for (let i = 0; i < num; i++) {
           let filtered_bookmark = this.bookmarkLists[i];
           if ((this.dateRange.start < filtered_bookmark.dateAdded) && (filtered_bookmark.dateAdded < this.dateRange.end)) {
-            booklists.push(filtered_bookmark);
+            this.booklists.push(filtered_bookmark);
           }
         }
       }
@@ -216,27 +233,27 @@ export default {
       }
 
       let that = this;
-      booklists.sort(function(a, b) {
+      this.booklists.sort(function(a, b) {
         return sort(a, b, that.sortTitleReverse, that.sortDateReverse, that.sortType);
       });
  
-      return booklists;
+      return this.booklists;
     },
     filteredBookmarkListsV2() {
-      let booklists = [];
+      this.booklists = [];
       let num = this.bookmarkManager.numOfBooks();
       if (this.mode == 'title') {
         for (let i = 0; i < num; i++) {
           let filtered_bookmark = this.bookmarkLists[i];
           if (filtered_bookmark.title.toLowerCase().indexOf(this.text) != -1) {
-            booklists.push(filtered_bookmark);
+            this.booklists.push(filtered_bookmark);
           }
         }
       } else if (this.mode == 'url') {
         for (let i = 0; i < num; i++) {
           let filtered_bookmark = this.bookmarkLists[i];
           if (filtered_bookmark.url.indexOf(this.text) != -1) {
-            booklists.push(filtered_bookmark);
+            this.booklists.push(filtered_bookmark);
           }
         }
       } else {
@@ -246,7 +263,7 @@ export default {
         for (let i = 0; i < num; i++) {
           let filtered_bookmark = this.bookmarkLists[i];
           if ((this.dateRange.start < filtered_bookmark.dateAdded) && (filtered_bookmark.dateAdded < this.dateRange.end)) {
-            booklists.push(filtered_bookmark);
+            this.booklists.push(filtered_bookmark);
           }
         }
       }
@@ -278,8 +295,8 @@ export default {
         this.bookgroup[book]['children'] = [];
       }
       
-      for (let i = 0; i < booklists.length; i++) {
-        this.bookgroup[booklists[i].parentId]['children'].push(booklists[i]);
+      for (let i = 0; i < this.booklists.length; i++) {
+        this.bookgroup[this.booklists[i].parentId]['children'].push(this.booklists[i]);
       }
 
       let books = [];
@@ -311,6 +328,10 @@ export default {
 
     eventBus.$on('delete', (bookmark_id) => {
       this.deleteBookmark(bookmark_id);
+    });
+
+    eventBus.$on('change_search_mode', () => {
+      this.booklists = [];
     });
   },
   methods: {
@@ -356,6 +377,15 @@ export default {
         this.bookmarkManager.editBookmarks(this.bookmark_id, mod_title);
         chrome.bookmarks.update(this.bookmark_id, {title:mod_title});
       }
+    },
+    handleOperation(operation) {
+      if (operation == "openAll") {
+        if (this.booklists.length != 0) {
+          for (let i=0; i <= this.booklists.length; i++){
+            chrome.tabs.create({url: this.booklists[i].url});
+          }
+        }
+      }
     }
   },
 };
@@ -378,8 +408,9 @@ export default {
   text-align: center;
   cursor: pointer;
   width: 80%;
-  line-height: 40px;
+  height: 40px;
   padding: 3px 5px;
+  vertical-align: middle;
 }
 
 .dateAdded {
@@ -388,6 +419,7 @@ export default {
   cursor: pointer;
   width: 20%;
   height: 40px;
+  vertical-align: middle;
 }
 
 #search {
@@ -396,6 +428,10 @@ export default {
 
 .search-result-table {
   width: 100%;
+}
+
+.search_operation {
+  padding: 3px;
 }
 
 input {
