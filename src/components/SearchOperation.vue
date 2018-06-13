@@ -1,6 +1,12 @@
 <template>
-  <div v-show="bookmark_urls.length > 0">
+  <div class="search-operation">
     <button 
+      class="btn btn-info float-right"
+      @click="handleFolderOperation"> 
+      {{ folderOpen? "colapse":"open" }}
+    </button>
+    <button 
+      v-show="bookmark_urls.length > 0"
       class="btn btn-info"
       @click="openAll">
       open({{ bookmark_urls.length }})
@@ -17,6 +23,7 @@ export default {
   data() {
     return {
       bookmark_urls: [],
+      folderOpen: true
     };
   },
   created() {
@@ -32,6 +39,14 @@ export default {
   methods: {
     openAll() {
       this.$emit('operation', this.bookmark_urls);
+    },
+    handleFolderOperation() {
+      this.folderOpen = !this.folderOpen;
+      if (this.folderOpen) {
+        eventBus.$emit('folderOperation', 'open');
+      } else {
+        eventBus.$emit('folderOperation', 'close');
+      }
     }
   },
 };
@@ -39,5 +54,13 @@ export default {
 </script>
 
 <style scoped>
+
+.float-right {
+  float: right;
+}
+
+.search-operation {
+  display: flow-root;
+}
 
 </style>

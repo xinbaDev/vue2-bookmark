@@ -26,6 +26,7 @@
 
 <script>
 
+import { eventBus } from '../main';
 import SearchBookmarkGroup from './SearchBookmarkGroup';
 
 export default {
@@ -44,11 +45,20 @@ export default {
       openFolder: true
     };
   },
+  created() {
+    eventBus.$on('folderOperation', (type) => {
+      if (type == "open") {
+        this.openFolder = true;
+      } else {
+        this.openFolder = false;
+      }
+    });
+  },
   methods: {
     toggleFolder() {
       this.openFolder = !this.openFolder;
     }
-  }
+  },
 };
 
 </script>

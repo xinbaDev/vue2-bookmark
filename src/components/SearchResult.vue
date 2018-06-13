@@ -39,13 +39,16 @@
           @click="handleEdit('cancel')">
           Cancel
         </button>
-      </template>
+      </template> 
 
     </Modal>
 
-    <SearchOperation
-      class="search_operation"
-      @operation="handleOperation"/>
+
+    <div v-show="booklists.length > 0">
+      <SearchOperation
+        class="search_operation"
+        @operation="handleOperation"/>
+    </div>
 
     <div 
       v-if="isNotEmpty() && !isSearchByDate" 
