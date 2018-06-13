@@ -43,12 +43,9 @@
 
     </Modal>
 
-    <div 
-      v-if="showOpenAll">
-      <SearchOperation
-        class="search_operation"
-        @operation="handleOperation"/>
-    </div>
+    <SearchOperation
+      class="search_operation"
+      @operation="handleOperation"/>
 
     <div 
       v-if="isNotEmpty() && !isSearchByDate" 
@@ -175,7 +172,7 @@ export default {
       return this.mode == 'time';
     },
     showOpenAll() {
-      if ((this.booklists.length < 10) && (this.booklists.length > 0)) {
+      if (this.bookmarkUrls.length > 0) {
         return true;
       } else {
         return false;
@@ -378,12 +375,10 @@ export default {
         chrome.bookmarks.update(this.bookmark_id, {title:mod_title});
       }
     },
-    handleOperation(operation) {
-      if (operation == "openAll") {
-        if (this.booklists.length != 0) {
-          for (let i=0; i <= this.booklists.length; i++){
-            chrome.tabs.create({url: this.booklists[i].url});
-          }
+    handleOperation(bookmarkUrls) {
+      if (bookmarkUrls.length > 0) {
+        for (let i = 0; i < bookmarkUrls.length; i++) {
+          chrome.tabs.create({url: bookmarkUrls[i]});
         }
       }
     }

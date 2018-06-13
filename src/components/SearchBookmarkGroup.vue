@@ -5,6 +5,13 @@
       class="title_bookmark" 
       @mouseover="hoverEdit = true" 
       @mouseleave="hoverEdit = false">
+
+      <input 
+        v-show="(hoverEdit == true) || (checked == true)" 
+        id="checkbox"
+        v-model="checked" 
+        type="checkbox"
+        @click="clickCheckBox(bookmark.url)">
        
       <img :src = "bookmark? bookmark.getFavIcon():''">
       <a 
@@ -53,7 +60,8 @@ export default {
   },
   data() {
     return {
-      hoverEdit: false
+      hoverEdit: false,
+      checked: false
     };
   },
   methods: {
@@ -76,6 +84,10 @@ export default {
     },
     editBookmark(bookmark_id, title) {
       eventBus.$emit('edit', bookmark_id, title);
+    },
+    clickCheckBox(bookmark_url) {
+      this.checked = !this.checked;
+      eventBus.$emit('checked', bookmark_url, this.checked);
     }
   }
 };
