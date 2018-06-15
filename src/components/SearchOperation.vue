@@ -1,15 +1,21 @@
 <template>
   <div class="search-operation">
     <button 
-      class="btn btn-info float-right"
+      class="btn btn-info"
       @click="handleFolderOperation"> 
       {{ folderOpen? "colapse":"open" }}
     </button>
     <button 
-      v-show="bookmark_urls.length > 0"
+      v-show="bookmarks.length > 0"
+      class="btn btn-info"
+      @click="handleExport"> 
+      export( {{ bookmarks.length }} )
+    </button>
+    <button 
+      v-show="bookmarks.length > 0"
       class="btn btn-info"
       @click="openAll">
-      open({{ bookmark_urls.length }})
+      open({{ bookmarks.length }})
     </button>
   </div>
 </template>
@@ -22,23 +28,23 @@ export default {
   name: "SearchOperation",
   data() {
     return {
-      bookmark_urls: [],
+      bookmarks: [],
       folderOpen: true
     };
   },
   created() {
-    eventBus.$on('checked', (bookmark_url, type) => {
+    eventBus.$on('checked', (bookmark, type) => {
       if (type == true) {
-        this.bookmark_urls.push(bookmark_url);
+        this.bookmarks.push(bookmark);
       } else {
-        let index = this.bookmark_urls.indexOf(bookmark_url);
-        this.bookmark_urls.splice(index, 1);
+        let index = this.bookmarks.indexOf(bookmark);
+        this.bookmarks.splice(index, 1);
       }
     });
   },
   methods: {
     openAll() {
-      this.$emit('operation', this.bookmark_urls);
+      this.$emit('open', this.bookmarks);
     },
     handleFolderOperation() {
       this.folderOpen = !this.folderOpen;
@@ -47,6 +53,9 @@ export default {
       } else {
         eventBus.$emit('folderOperation', 'close');
       }
+    },
+    handleExport() {
+      this.$emit('export', this.bookmarks);
     }
   },
 };

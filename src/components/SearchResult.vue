@@ -43,11 +43,36 @@
 
     </Modal>
 
+    <Modal v-if="showExport">
+
+      <template slot="body">
+        <ol>
+          <li v-for="bookmark in exportBookmarks">
+            {{ bookmark.titletext }} {{ bookmark.url }}
+          </li>
+        </ol>
+      </template>
+
+      <template slot="footer">
+        <button 
+          class="btn btn-primary" 
+          @click="handleCopy('copy')">
+          Copy
+        </button>
+        <button 
+          class="btn btn-secondary" 
+          @click="handleCopy('cancel')">
+          Cancel
+        </button>
+      </template> 
+
+    </Modal>
 
     <div v-show="booklists.length > 0">
       <SearchOperation
         class="search_operation"
-        @operation="handleOperation"/>
+        @open="handleOpen"
+        @export="handleExport"/>
     </div>
 
     <div 
@@ -131,6 +156,7 @@ import SearchResultList from "./SearchResultList";
 import SearchOperation from "./SearchOperation";
 import { eventBus } from '../main';
 
+
 export default {
   name: 'SearchResult',
   components: {
@@ -167,7 +193,9 @@ export default {
       showEditModal: false,
       title:"",
       bookgroup: {},
-      booklists: []
+      booklists: [],
+      showExport: false,
+      exportBookmarks: []
     };
   },
   computed: {
@@ -378,12 +406,30 @@ export default {
         chrome.bookmarks.update(this.bookmark_id, {title:mod_title});
       }
     },
-    handleOperation(bookmarkUrls) {
-      if (bookmarkUrls.length > 0) {
-        for (let i = 0; i < bookmarkUrls.length; i++) {
-          chrome.tabs.create({url: bookmarkUrls[i]});
+    handleOpen(bookmarks) {
+      if (bookmarks.length > 0) {
+        for (let i = 0; i < bookmarks.length; i++) {
+          chrome.tabs.create({url: bookmarks[i].url});
         }
       }
+    },
+    handleExport(bookmarks) {
+      if (bookmarks.length > 0) {
+        this.exportBookmarks = bookmarks;
+        this.showExport = true;
+      }
+    },
+    handleCopy(action) {
+      if (action == "copy") {
+        let bookmarks = "";
+        for (let i = 0; i < this.exportBookmarks.length; i++) {
+          bookmarks += this.exportBookmarks[i].titletext + " : " + this.exportBookmarks[i].url + "\n";
+        }
+
+        this.$clipboard(bookmarks);
+      } else {
+        this.showExport = false;
+      } 
     }
   },
 };

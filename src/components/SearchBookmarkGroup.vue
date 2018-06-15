@@ -11,7 +11,7 @@
         id="checkbox"
         v-model="checked" 
         type="checkbox"
-        @click="clickCheckBox(bookmark.url)">
+        @click="clickCheckBox(bookmark)">
        
       <img :src = "bookmark? bookmark.getFavIcon():''">
       <a 
@@ -85,9 +85,9 @@ export default {
     editBookmark(bookmark_id, title) {
       eventBus.$emit('edit', bookmark_id, title);
     },
-    clickCheckBox(bookmark_url) {
+    clickCheckBox(bookmark) {
       this.checked = !this.checked;
-      eventBus.$emit('checked', bookmark_url, this.checked);
+      eventBus.$emit('checked', bookmark, this.checked);
     }
   }
 };

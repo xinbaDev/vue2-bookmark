@@ -59,7 +59,6 @@
 
 </template>
 
-
 <script>
 
 import fecha from 'fecha';
