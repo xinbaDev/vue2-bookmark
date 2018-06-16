@@ -73,6 +73,8 @@ export default {
 
 .modal-body {
   margin: 20px 0;
+  height: 100px;
+  overflow: auto;
 }
 
 .modal-enter {
