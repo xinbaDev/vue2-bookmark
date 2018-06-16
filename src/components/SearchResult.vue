@@ -361,6 +361,14 @@ export default {
     eventBus.$on('change_search_mode', () => {
       this.booklists = [];
     });
+
+    eventBus.$on('checked', (bookmark, checked) => {
+      for (let i = 0; i < this.bookmarkLists.length; i++) {
+        if (this.bookmarkLists[i].id == bookmark.id) {
+          this.bookmarkLists[i]['checked'] = checked;
+        }
+      }
+    });
   },
   methods: {
     isNotEmpty() {
