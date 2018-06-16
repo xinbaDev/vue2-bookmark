@@ -8,7 +8,7 @@
 
       <input 
         v-show="(hoverEdit == true) || (checked == true)" 
-        id="checkbox"
+        class="checkbox"
         v-model="checked" 
         type="checkbox"
         @click="clickCheckBox(bookmark)">
@@ -113,7 +113,6 @@ export default {
   border: 1px solid grey;
   width: 80%;
   padding: 3px 5px;
-  padding-left: 20px;
   border-left: 4px solid #ff7818;
 }
 
@@ -123,6 +122,7 @@ export default {
 
 .title_bookmark img {
   margin-right: 3px;
+  padding-left: 20px;
 }
 
 .date_bookmark{
@@ -133,6 +133,10 @@ export default {
 
 tr {
   display: flex;
+}
+
+.checkbox {
+  position: absolute;
 }
 
 </style>
