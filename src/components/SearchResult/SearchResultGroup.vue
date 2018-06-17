@@ -48,10 +48,10 @@
 
 <script>
 
-import { eventBus } from '../../main';
+import { eventBus } from "../../main";
 
 export default {
-  name: 'SearchResultGroup',
+  name: "SearchResultGroup",
   props: {
     bookmark: {
       type: Object,
@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       hoverEdit: false,
-      checked: this.bookmark['checked']? this.bookmark['checked']:false
+      checked: this.bookmark["checked"]? this.bookmark["checked"]:false
     };
   },
   methods: {
@@ -80,14 +80,14 @@ export default {
       bookmark.isImportant = !bookmark.isImportant;
     },
     deleteBookmark(bookmark_id) {
-      eventBus.$emit('delete', bookmark_id);
+      eventBus.$emit("delete", bookmark_id);
     },
     editBookmark(bookmark_id, title) {
-      eventBus.$emit('edit', bookmark_id, title);
+      eventBus.$emit("edit", bookmark_id, title);
     },
     clickCheckBox(bookmark) {
       this.checked = !this.checked;
-      eventBus.$emit('checked', bookmark, this.checked);
+      eventBus.$emit("checked", bookmark, this.checked);
     }
   }
 };

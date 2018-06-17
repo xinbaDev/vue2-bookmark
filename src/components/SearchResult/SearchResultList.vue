@@ -30,7 +30,7 @@ import { eventBus } from '../../main';
 import SearchResultGroup from './SearchResultGroup';
 
 export default {
-  name: 'SearchResultList',
+  name: "SearchResultList",
   components:{
     SearchResultGroup
   },
@@ -46,7 +46,7 @@ export default {
     };
   },
   created() {
-    eventBus.$on('folderOperation', (type) => {
+    eventBus.$on("folderOperation", (type) => {
       if (type == "open") {
         this.openFolder = true;
       } else {

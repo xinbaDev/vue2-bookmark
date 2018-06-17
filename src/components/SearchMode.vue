@@ -23,8 +23,8 @@
           <input 
             ref="search" 
             v-model="searchText" 
-            class="search-input form-control fa"
             :placeholder="showNumOfBookmark()"
+            class="search-input form-control fa"
             @keyup="$emit('change', $event.target.value)">
           <i 
             v-if="mode == 'title'" 
@@ -44,10 +44,10 @@
 
 <script>
 
-import { eventBus } from '../main';
+import { eventBus } from "../main";
 
 export default {
-  name: 'SearchMode',
+  name: "SearchMode",
   props: {
     mode: {
       type: String,
@@ -68,14 +68,14 @@ export default {
     this.$refs.search.focus();
   },
   created() {
-    eventBus.$on('numofbookmark', (num) => {
+    eventBus.$on("numofbookmark", (num) => {
       this.numofbookmark = num;
     });
   },
   methods: {
     toggle() {
       this.isOpenCalendar = !this.isOpenCalendar;
-      this.$emit('toggleCalendar', this.isOpenCalendar);
+      this.$emit("toggleCalendar", this.isOpenCalendar);
     },
     showNumOfBookmark() {
       if (this.numofbookmark <= 1) {

@@ -22,7 +22,7 @@
 
 <script>
 
-import { eventBus } from '../../main';
+import { eventBus } from "../../main";
 
 export default {
   name: "SearchResultOperation",
@@ -33,7 +33,7 @@ export default {
     };
   },
   created() {
-    eventBus.$on('checked', (bookmark, type) => {
+    eventBus.$on("checked", (bookmark, type) => {
       if (type == true) {
         this.bookmarks.push(bookmark);
       } else {
@@ -44,18 +44,18 @@ export default {
   },
   methods: {
     openAll() {
-      this.$emit('open', this.bookmarks);
+      this.$emit("open", this.bookmarks);
     },
     handleFolderOperation() {
       this.folderOpen = !this.folderOpen;
       if (this.folderOpen) {
-        eventBus.$emit('folderOperation', 'open');
+        eventBus.$emit("folderOperation", "open");
       } else {
-        eventBus.$emit('folderOperation', 'close');
+        eventBus.$emit("folderOperation", "close");
       }
     },
     handleExport() {
-      this.$emit('export', this.bookmarks);
+      this.$emit("export", this.bookmarks);
     }
   },
 };

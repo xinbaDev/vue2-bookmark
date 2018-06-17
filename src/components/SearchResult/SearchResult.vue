@@ -78,29 +78,10 @@
     <div 
       v-if="isNotEmpty() && !isSearchByDate" 
       class="list_scrollable">
-      <table class="search-result-table">
-        <td 
-          class="bookmarkTitle" 
-          @click="sortType = 'title'; sortTitleReverse = !sortTitleReverse">Title
-          <span 
-            v-show="sortType == 'title' && sortTitleReverse" 
-            class="fa fa-caret-down sortIcon"/>
-          <span 
-            v-show="sortType == 'title' && !sortTitleReverse" 
-            class="fa fa-caret-up sortIcon"/>
-        </td>
 
-        <td 
-          class="dateAdded" 
-          @click="sortType = 'dateAdded'; sortDateReverse = !sortDateReverse">DateAdded
-          <span 
-            v-show="sortType == 'dateAdded' && sortDateReverse" 
-            class="fa fa-caret-down sortIcon"/>
-          <span 
-            v-show="sortType == 'dateAdded' && !sortDateReverse" 
-            class="fa fa-caret-up sortIcon"/>
-        </td>
-      </table>
+      <ResultSorter
+        @toggleTitle="handleToggleTitle"
+        @toggleDateAdded="handleToggleDateAdded"/>
 
       <SearchResultList 
         v-for="bookmarkgroup in filteredBookmarkListsV2"
@@ -113,30 +94,10 @@
       v-if="isSearchByDate" 
       v-show="dateRange != null && isOpen == false"
       class="date_scrollable">
-      <table
-        class="search-result-table">
-        <td 
-          class="bookmarkTitle" 
-          @click="sortType = 'title'; sortTitleReverse = !sortTitleReverse">Title
-          <span 
-            v-show="sortType == 'title' && !sortTitleReverse" 
-            class="fa fa-caret-down sortIcon"/>
-          <span 
-            v-show="sortType == 'title' && sortTitleReverse" 
-            class="fa fa-caret-up sortIcon"/>
-        </td>
 
-        <td 
-          class="dateAdded" 
-          @click="sortType = 'dateAdded'; sortDateReverse = !sortDateReverse">DateAdded
-          <span 
-            v-show="sortType == 'dateAdded' && !sortDateReverse" 
-            class="fa fa-caret-down sortIcon"/>
-          <span 
-            v-show="sortType == 'dateAdded' && sortDateReverse" 
-            class="fa fa-caret-up sortIcon"/>
-        </td>
-      </table>
+      <ResultSorter
+        @toggleTitle="handleToggleTitle"
+        @toggleDateAdded="handleToggleDateAdded"/>
 
       <SearchResultList 
         v-for="bookmarkgroup in filteredBookmarkListsV2"
@@ -152,17 +113,19 @@
 
 import Modal from "../Modal/Modal";
 import bookmark from "../../models/bookmark";
+import ResultSorter from "./ResultSorter";
 import SearchResultList from "./SearchResultList";
 import SearchResultOperation from "./SearchResultOperation";
-import { eventBus } from '../../main';
+import { eventBus } from "../../main";
 
 
 export default {
-  name: 'SearchResult',
+  name: "SearchResult",
   components: {
     SearchResultList,
     Modal,
-    SearchResultOperation
+    SearchResultOperation,
+    ResultSorter
   },
   props: {
     mode: {
@@ -431,7 +394,15 @@ export default {
       } else {
         this.showExport = false;
       } 
-    }
+    },
+    handleToggleDateAdded(sortType, sortDateReverse) {
+      this.sortType = sortType;
+      this.sortDateReverse = sortDateReverse;
+    },
+    handleToggleTitle(sortType, sortTitleReverse) {
+      this.sortType = sortType;
+      this.sortTitleReverse = sortTitleReverse;
+    },
   },
 };
 </script>
@@ -448,31 +419,8 @@ export default {
   overflow-x: hidden;
 }
 
-.bookmarkTitle {
-  border: 1px solid grey;
-  text-align: center;
-  cursor: pointer;
-  width: 80%;
-  height: 40px;
-  padding: 3px 5px;
-  vertical-align: middle;
-}
-
-.dateAdded {
-  border: 1px solid grey;
-  text-align: center;
-  cursor: pointer;
-  width: 20%;
-  height: 40px;
-  vertical-align: middle;
-}
-
 #search {
   padding-left: 30px;
-}
-
-.search-result-table {
-  width: 100%;
 }
 
 .search_operation {

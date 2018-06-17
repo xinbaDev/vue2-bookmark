@@ -20,7 +20,7 @@
 <script>
 
 export default {
-  name: 'Modal',
+  name: "Modal",
   props: {
     title: {
       type: String,
