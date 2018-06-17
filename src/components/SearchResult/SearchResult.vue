@@ -69,7 +69,7 @@
     </Modal>
 
     <div v-show="booklists.length > 0">
-      <SearchOperation
+      <SearchResultOperation
         class="search_operation"
         @open="handleOpen"
         @export="handleExport"/>
@@ -153,7 +153,7 @@
 import Modal from "../Modal/Modal";
 import bookmark from "../../models/bookmark";
 import SearchResultList from "./SearchResultList";
-import SearchOperation from "./SearchOperation";
+import SearchResultOperation from "./SearchResultOperation";
 import { eventBus } from '../../main';
 
 
@@ -162,7 +162,7 @@ export default {
   components: {
     SearchResultList,
     Modal,
-    SearchOperation
+    SearchResultOperation
   },
   props: {
     mode: {

@@ -25,7 +25,7 @@
 import { eventBus } from '../../main';
 
 export default {
-  name: "SearchOperation",
+  name: "SearchResultOperation",
   data() {
     return {
       bookmarks: [],
