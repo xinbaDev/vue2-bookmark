@@ -15,7 +15,7 @@
        
       <img :src = "bookmark? bookmark.getFavIcon():''">
       <a 
-        href="" 
+        href="#" 
         @click="openLink(bookmark.url)">{{ bookmark? bookmark.titletext:"" }}</a> 
 
       <i 
@@ -48,10 +48,10 @@
 
 <script>
 
-import { eventBus } from '../main';
+import { eventBus } from '../../main';
 
 export default {
-  name: 'SearchBookmarkGroup',
+  name: 'SearchResultGroup',
   props: {
     bookmark: {
       type: Object,

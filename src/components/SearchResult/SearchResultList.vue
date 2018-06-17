@@ -12,7 +12,7 @@
     </div>
     
     <!-- <transition name="slide"> -->
-    <SearchBookmarkGroup
+    <SearchResultGroup
       v-for="bookmark in bookmarkgroup['children']"
       v-show="openFolder"
       :bookmark="bookmark"
@@ -26,13 +26,13 @@
 
 <script>
 
-import { eventBus } from '../main';
-import SearchBookmarkGroup from './SearchBookmarkGroup';
+import { eventBus } from '../../main';
+import SearchResultGroup from './SearchResultGroup';
 
 export default {
   name: 'SearchResultList',
   components:{
-    SearchBookmarkGroup
+    SearchResultGroup
   },
   props: {
     bookmarkgroup: {

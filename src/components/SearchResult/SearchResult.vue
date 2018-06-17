@@ -150,11 +150,11 @@
 
 <script>
 
-import Modal from "./Modal/Modal";
-import bookmark from "../models/bookmark";
+import Modal from "../Modal/Modal";
+import bookmark from "../../models/bookmark";
 import SearchResultList from "./SearchResultList";
 import SearchOperation from "./SearchOperation";
-import { eventBus } from '../main';
+import { eventBus } from '../../main';
 
 
 export default {
@@ -201,13 +201,6 @@ export default {
   computed: {
     isSearchByDate() {
       return this.mode == 'time';
-    },
-    showOpenAll() {
-      if (this.bookmarkUrls.length > 0) {
-        return true;
-      } else {
-        return false;
-      }
     },
     filteredBookmarkLists() {
       this.booklists = [];
