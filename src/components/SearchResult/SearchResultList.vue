@@ -8,7 +8,14 @@
       <i 
         :class="[openFolder ? 'fa-folder-open' : 'fa-folder']"
         class="folder fa"/> 
-      {{ bookmarkgroup['title'] }} ({{ bookmarkgroup['count'] }} found)
+      <span> {{ bookmarkgroup['title'] }} </span>
+
+      <div class="inline">
+        <div class="bookmark_number_circle">
+          <span class="bookmark_number">{{ bookmarkgroup['count'] }} </span>
+        </div>
+      </div>
+
     </div>
     
     <!-- <transition name="slide"> -->
@@ -120,6 +127,25 @@ export default {
   to {
     transform: translateY(-20px);
   }
+}
+
+.bookmark_number_circle {
+  border-radius: 50%;
+  background: #8c8585;
+  height: 14px;
+  width: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.inline {
+  display: inline;
+}
+
+.bookmark_number {
+  color: white;
+  font-size: 9px;
 }
 
 </style>
