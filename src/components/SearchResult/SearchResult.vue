@@ -1,72 +1,19 @@
 <template>
 
   <div>
-    <Modal v-if="showDeleteModal">
+    <DeleteModal
+      v-if="showDeleteModal"
+      @delete="handleDelete"/>
 
-      <template slot="body">
-        Delete bookmark
-      </template>
+    <EditModal
+      v-if="showEditModal"
+      :title="title"
+      @change="handleEdit"/>
 
-      <template slot="footer">
-        <button 
-          class="btn btn-danger" 
-          @click="handleDelete('delete')">
-          Delete
-        </button>
-        <button 
-          class="btn btn-secondary" 
-          @click="handleDelete('cancel')">
-          Cancel
-        </button>
-      </template>
-
-    </Modal>
-
-    <Modal v-if="showEditModal">
-
-      <template slot="body">
-        New Title: <input v-model="title">
-      </template>
-
-      <template slot="footer">
-        <button 
-          class="btn btn-primary" 
-          @click="handleEdit('edit',title)">
-          Edit
-        </button>
-        <button 
-          class="btn btn-secondary" 
-          @click="handleEdit('cancel')">
-          Cancel
-        </button>
-      </template> 
-
-    </Modal>
-
-    <Modal v-if="showExport">
-
-      <template slot="body">
-        <ol>
-          <li v-for="bookmark in exportBookmarks">
-            {{ bookmark.titletext }} {{ bookmark.url }}
-          </li>
-        </ol>
-      </template>
-
-      <template slot="footer">
-        <button 
-          class="btn btn-primary" 
-          @click="handleCopy('copy')">
-          Copy
-        </button>
-        <button 
-          class="btn btn-secondary" 
-          @click="handleCopy('cancel')">
-          Cancel
-        </button>
-      </template> 
-
-    </Modal>
+    <ExportModal
+      v-if="showExportModal"
+      :exportBookmarks="exportBookmarks"
+      @export="handleCopy"/>
 
     <div v-show="booklists.length > 0">
       <SearchResultOperation
@@ -75,23 +22,23 @@
         @export="handleExport"/>
     </div>
 
-    <div 
-      v-if="isNotEmpty() && !isSearchByDate" 
+    <div
+      v-if="isNotEmpty() && !isSearchByDate"
       class="list_scrollable">
 
       <ResultSorter
         @toggleTitle="handleToggleTitle"
         @toggleDateAdded="handleToggleDateAdded"/>
 
-      <SearchResultList 
+      <SearchResultList
         v-for="bookmarkgroup in filteredBookmarkListsV2"
         :bookmarkgroup="bookmarkgroup"
         :key="bookmarkgroup['group']"/>
 
     </div>
 
-    <div 
-      v-if="isSearchByDate" 
+    <div
+      v-if="isSearchByDate"
       v-show="dateRange != null && isOpen == false"
       class="date_scrollable">
 
@@ -99,19 +46,22 @@
         @toggleTitle="handleToggleTitle"
         @toggleDateAdded="handleToggleDateAdded"/>
 
-      <SearchResultList 
+      <SearchResultList
         v-for="bookmarkgroup in filteredBookmarkListsV2"
         :bookmarkgroup="bookmarkgroup"
         :key="bookmarkgroup['group']"/>
 
-    </div>  
+    </div>
   </div>
 
 </template>
 
 <script>
 
-import Modal from "../Modal/Modal";
+
+import ExportModal from "../Modal/ExportModal";
+import DeleteModal from "../Modal/DeleteModal";
+import EditModal from "../Modal/EditModal";
 import bookmark from "../../models/bookmark";
 import ResultSorter from "./ResultSorter";
 import SearchResultList from "./SearchResultList";
@@ -123,7 +73,9 @@ export default {
   name: "SearchResult",
   components: {
     SearchResultList,
-    Modal,
+    EditModal,
+    DeleteModal,
+    ExportModal,
     SearchResultOperation,
     ResultSorter
   },
@@ -147,17 +99,20 @@ export default {
   },
   data() {
     return {
-      bookmarkManager: "",
+      bookmarkManager: {},
       bookmarkLists: {},
+
       sortType: 'date',
       sortDateReverse: true,
       sortTitleReverse: false,
+
       showDeleteModal: false,
       showEditModal: false,
+      showExportModal: false,
+
       title:"",
       bookgroup: {},
       booklists: [],
-      showExport: false,
       exportBookmarks: []
     };
   },
@@ -220,7 +175,7 @@ export default {
       this.booklists.sort(function(a, b) {
         return sort(a, b, that.sortTitleReverse, that.sortDateReverse, that.sortType);
       });
- 
+
       return this.booklists;
     },
     filteredBookmarkListsV2() {
@@ -278,7 +233,7 @@ export default {
       for (const book in this.bookgroup) {
         this.bookgroup[book]['children'] = [];
       }
-      
+
       for (let i = 0; i < this.booklists.length; i++) {
         this.bookgroup[this.booklists[i].parentId]['children'].push(this.booklists[i]);
       }
@@ -294,7 +249,7 @@ export default {
             return sort(a, b, that.sortTitleReverse, that.sortDateReverse, that.sortType);
           });
           books.push({
-            'title':this.bookgroup[group]['title'], 
+            'title':this.bookgroup[group]['title'],
             'children':children,
             'count':children.length
           });
@@ -363,11 +318,11 @@ export default {
       this.title = title;
       this.showEditModal = true;
     },
-    handleEdit(result, mod_title) {
+    handleEdit(result, new_title) {
       this.showEditModal = false;
       if (result != 'cancel') {
-        this.bookmarkManager.editBookmarks(this.bookmark_id, mod_title);
-        chrome.bookmarks.update(this.bookmark_id, {title:mod_title});
+        this.bookmarkManager.editBookmarks(this.bookmark_id, new_title);
+        chrome.bookmarks.update(this.bookmark_id, {title:new_title});
       }
     },
     handleOpen(bookmarks) {
@@ -380,20 +335,11 @@ export default {
     handleExport(bookmarks) {
       if (bookmarks.length > 0) {
         this.exportBookmarks = bookmarks;
-        this.showExport = true;
+        this.showExportModal = true;
       }
     },
-    handleCopy(action) {
-      if (action == "copy") {
-        let bookmarks = "";
-        for (let i = 0; i < this.exportBookmarks.length; i++) {
-          bookmarks += this.exportBookmarks[i].titletext + " : " + this.exportBookmarks[i].url + "\n";
-        }
-
-        this.$clipboard(bookmarks);
-      } else {
-        this.showExport = false;
-      } 
+    handleCopy() {
+        this.showExportModal = !this.showExportModal;
     },
     handleToggleDateAdded(sortType, sortDateReverse) {
       this.sortType = sortType;
@@ -425,10 +371,6 @@ export default {
 
 .search_operation {
   padding: 3px;
-}
-
-input {
-  width: 80%;
 }
 
 </style>

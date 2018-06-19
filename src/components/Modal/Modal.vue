@@ -21,17 +21,6 @@
 
 export default {
   name: "Modal",
-  props: {
-    title: {
-      type: String,
-      required: true
-    }
-  },
-  data() {
-    return {
-      mod_title: this.title
-    };
-  }
 };
 
 </script>
