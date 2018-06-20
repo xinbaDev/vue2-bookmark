@@ -67,7 +67,7 @@ import ResultSorter from "./ResultSorter";
 import SearchResultList from "./SearchResultList";
 import SearchResultOperation from "./SearchResultOperation";
 import { eventBus } from "../../main";
-
+import { sortBookmark } from '../../utils';
 
 export default {
   name: "SearchResult",
@@ -150,31 +150,9 @@ export default {
         }
       }
 
-      function sort(a, b, titleReverse, dateReserve, type) {
-        if (b.isImportant > a.isImportant) {
-          return 1;
-        } else if (b.isImportant < a.isImportant) {
-          return -1;
-        } else {
-          if (type == "title") {
-            if (titleReverse) {
-              return (b.title > a.title) ? 1 : -1;
-            } else {
-              return (a.title > b.title) ? 1 : -1;
-            }
-          } else {
-            if (dateReserve) {
-              return (b.dateAdded > a.dateAdded) ? 1 : -1;
-            } else {
-              return (a.dateAdded > b.dateAdded) ? 1 : -1;
-            }
-          }
-        }
-      }
-
       let that = this;
       this.booklists.sort(function(a, b) {
-        return sort(a, b, that.sortTitleReverse, that.sortDateReverse, that.sortType);
+        return sortBookmark(a, b, that.sortType, that.sortTitleReverse, that.sortDateReverse, );
       });
 
       return this.booklists;
@@ -208,28 +186,6 @@ export default {
         }
       }
 
-      function sort(a, b, titleReverse, dateReserve, type) {
-        if (b.isImportant > a.isImportant) {
-          return 1;
-        } else if (b.isImportant < a.isImportant) {
-          return -1;
-        } else {
-          if (type == "title") {
-            if (titleReverse) {
-              return (b.title > a.title) ? 1 : -1;
-            } else {
-              return (a.title > b.title) ? 1 : -1;
-            }
-          } else {
-            if (dateReserve) {
-              return (b.dateAdded > a.dateAdded) ? 1 : -1;
-            } else {
-              return (a.dateAdded > b.dateAdded) ? 1 : -1;
-            }
-          }
-        }
-      }
-
       //remove existing bookmarks
       for (const book in this.bookgroup) {
         this.bookgroup[book]['children'] = [];
@@ -247,7 +203,7 @@ export default {
         if (children.length > 0) {
 
           children.sort(function(a, b) {
-            return sort(a, b, that.sortTitleReverse, that.sortDateReverse, that.sortType);
+            return sortBookmark(a, b, that.sortType, that.sortTitleReverse, that.sortDateReverse, );
           });
           books.push({
             'title':this.bookgroup[group]['title'],
