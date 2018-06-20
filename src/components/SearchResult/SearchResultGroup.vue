@@ -61,7 +61,7 @@ export default {
   data() {
     return {
       hoverEdit: false,
-      checked: this.bookmark["checked"]? this.bookmark["checked"]:false
+      checked: this.bookmark["checked"] ? this.bookmark["checked"] : false
     };
   },
   methods: {
