@@ -12,7 +12,7 @@
 
     <ExportModal
       v-if="showExportModal"
-      :exportBookmarks="exportBookmarks"
+      :export-bookmarks="exportBookmarks"
       @export="handleCopy"/>
 
     <div v-show="booklists.length > 0">
@@ -67,7 +67,7 @@ import ResultSorter from "./ResultSorter";
 import SearchResultList from "./SearchResultList";
 import SearchResultOperation from "./SearchResultOperation";
 import { eventBus } from "../../main";
-import { sortBookmark } from '../../utils';
+import { sortBookmark, filterBookmarkByText, filterBookmarkByDateRange } from '../../utils';
 
 export default {
   name: "SearchResult",
@@ -158,32 +158,10 @@ export default {
       return this.booklists;
     },
     filteredBookmarkListsV2() {
-      this.booklists = [];
-      let num = this.bookmarkManager.numOfBooks();
-      if (this.mode == 'title') {
-        for (let i = 0; i < num; i++) {
-          let filtered_bookmark = this.bookmarkLists[i];
-          if (filtered_bookmark.title.toLowerCase().indexOf(this.text) != -1) {
-            this.booklists.push(filtered_bookmark);
-          }
-        }
-      } else if (this.mode == 'url') {
-        for (let i = 0; i < num; i++) {
-          let filtered_bookmark = this.bookmarkLists[i];
-          if (filtered_bookmark.url.indexOf(this.text) != -1) {
-            this.booklists.push(filtered_bookmark);
-          }
-        }
+      if (this.mode != 'time') {
+        this.booklists = filterBookmarkByText(this.bookmarkLists, this.text, this.mode);
       } else {
-        if (this.dateRange == null) {
-          return [];
-        }
-        for (let i = 0; i < num; i++) {
-          let filtered_bookmark = this.bookmarkLists[i];
-          if ((this.dateRange.start < filtered_bookmark.dateAdded) && (filtered_bookmark.dateAdded < this.dateRange.end)) {
-            this.booklists.push(filtered_bookmark);
-          }
-        }
+        this.booklists = filterBookmarkByDateRange(this.bookmarkLists, this.dateRange);
       }
 
       //remove existing bookmarks
@@ -296,7 +274,7 @@ export default {
       }
     },
     handleCopy() {
-        this.showExportModal = !this.showExportModal;
+      this.showExportModal = !this.showExportModal;
     },
     handleToggleDateAdded(sortType, sortDateReverse) {
       this.sortType = sortType;
