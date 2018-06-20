@@ -2,81 +2,81 @@
 
   <div class="calendar-root">
     <!--     <div class="input-date" @click="toggleCalendar()"> {{getDateString(dateRange.start)}} - {{getDateString(dateRange.end)}}</div> -->
-    <div 
-      v-if="isOpenCalendar" 
-      :class="{'calendar-mobile ': isCompact, 'calendar-right-to-left': isRighttoLeft}" 
+    <div
+      v-if="isOpenCalendar"
+      :class="{'calendar-mobile ': isCompact, 'calendar-right-to-left': isRighttoLeft}"
       class="calendar">
-      <div 
-        v-if="!isCompact" 
+      <div
+        v-if="!isCompact"
         class="calendar-head">
         <h2>{{ captions.title }}</h2>
         <!--         <i class="close" @click="toggleCalendar()">x</i> -->
       </div>
       <div class="calendar-wrap">
-        <div 
-          v-if="showMonth" 
-          :class="{'calendar-left-mobile': isCompact}" 
+        <div
+          v-if="showMonth"
+          :class="{'calendar-left-mobile': isCompact}"
           class="calendar_month_left">
           <div class="months-text">
-            <i 
-              class="left" 
+            <i
+              class="left"
               @click="goPrevMonth"/>
-            <i 
-              v-if="isCompact" 
-              class="right" 
+            <i
+              v-if="isCompact"
+              class="right"
               @click="goNextMonth"/>
             {{ monthsLocale[activeMonthStart] +' '+ activeYearStart }}</div>
           <ul :class="s.daysWeeks">
-            <li 
-              v-for="item in shortDaysLocale" 
+            <li
+              v-for="item in shortDaysLocale"
               :key="item">{{ item }}</li>
           </ul>
-          <ul 
-            v-for="r in 6" 
-            :class="[s.days]" 
+          <ul
+            v-for="r in 6"
+            :class="[s.days]"
             :key="r">
-            <li 
-              v-for="i in numOfDays" 
+            <li
+              v-for="i in numOfDays"
               :class="[{[s.daysSelected]: isDateSelected(r, i, 'first', startMonthDay, endMonthDate),
                         [s.daysInRange]: isDateInRange(r, i, 'first', startMonthDay, endMonthDate),
-                        [s.dateDisabled]: isDateDisabled(r, i, startMonthDay, endMonthDate)}]" 
-              :key="i" 
+                        [s.dateDisabled]: isDateDisabled(r, i, startMonthDay, endMonthDate)}]"
+              :key="i"
               @click="selectFirstItem(r, i)"
               v-html="getDayCell(r, i, startMonthDay, endMonthDate)"/>
           </ul>
         </div>
-        <div 
-          v-if="!isCompact" 
+        <div
+          v-if="!isCompact"
           class="calendar_month_right">
           <div class="months-text">
             {{ monthsLocale[startNextActiveMonth] +' '+ activeYearEnd }}
-            <i 
-              class="right" 
+            <i
+              class="right"
               @click="goNextMonth"/>
           </div>
           <ul :class="s.daysWeeks">
-            <li 
-              v-for="item in shortDaysLocale" 
+            <li
+              v-for="item in shortDaysLocale"
               :key="item">{{ item }}</li>
           </ul>
-          <ul 
-            v-for="r in 6" 
-            :class="[s.days]" 
+          <ul
+            v-for="r in 6"
+            :class="[s.days]"
             :key="r">
-            <li 
+            <li
               v-for="i in numOfDays"
               :class="[{[s.daysSelected]: isDateSelected(r, i, 'second', startNextMonthDay, endNextMonthDate),
                         [s.daysInRange]: isDateInRange(r, i, 'second', startNextMonthDay, endNextMonthDate),
-                        [s.dateDisabled]: isDateDisabled(r, i, startNextMonthDay, endNextMonthDate)}]" 
-              :key="i" 
+                        [s.dateDisabled]: isDateDisabled(r, i, startNextMonthDay, endNextMonthDate)}]"
+              :key="i"
               @click="selectSecondItem(r, i)"
               v-html="getDayCell(r, i, startNextMonthDay, endNextMonthDate)"/>
           </ul>
         </div>
       </div>
-      <div 
-        v-if="!showMonth || !isCompact" 
-        :class="{'calendar-range-mobile ': isCompact}" 
+      <div
+        v-if="!showMonth || !isCompact"
+        :class="{'calendar-range-mobile ': isCompact}"
         class="calendar-range">
         <ul class="calendar_preset">
           <li
@@ -87,12 +87,12 @@
             @click="updatePreset(item)">
             {{ item.label }}
           </li>
-          <li><button 
-            class="calendar-btn-apply" 
+          <li><button
+            class="calendar-btn-apply"
             @click="setDateValue()">{{ captions.ok_button }}</button></li>
         </ul>
       </div>
-      
+
     </div>
   </div>
 
@@ -524,7 +524,6 @@ export default {
 .calendar {
   display: block;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  width: 700px;
   font-size: 12px;
   height: 300px;
   box-shadow: -3px 4px 12px -1px #ccc;

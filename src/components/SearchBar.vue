@@ -1,42 +1,42 @@
 <template>
 
   <div>
-    <div class="input-group">
+    <div class="search-bar input-group">
 
-      <div 
-        class="input-group-addon btn_toggle" 
+      <div
+        class="input-group-addon btn_toggle"
         @click="isOpen = !isOpen">
         <i class="fa fa-search"/>
-        <i 
-          v-show="!isOpen" 
+        <i
+          v-show="!isOpen"
           class="fa fa-angle-right"/>
-        <i 
-          v-show="isOpen" 
+        <i
+          v-show="isOpen"
           class="fa fa-angle-left"/>
 
       </div>
 
-      <div 
-        v-if="isOpen" 
+      <div
+        v-if="isOpen"
         class="toggle-menu">
-        <li><div 
-          class="btn_toggle" 
-          @click="titleClick"><i class="fa fa-bookmark"/> Title<i 
-            v-show="mode == 'title'" 
+        <li><div
+          class="btn_toggle"
+          @click="titleClick"><i class="fa fa-bookmark"/> Title<i
+            v-show="mode == 'title'"
             class="fa fa-check"/></div></li>
-        <li><div 
-          class="btn_toggle" 
-          @click="urlClick"><i class="fa fa-link"/> URL<i 
-            v-show="mode == 'url'" 
+        <li><div
+          class="btn_toggle"
+          @click="urlClick"><i class="fa fa-link"/> URL<i
+            v-show="mode == 'url'"
             class="fa fa-check"/></div></li>
-        <li><div 
-          class="btn_toggle" 
-          @click="timeClick"><i class="fa fa-calendar"/> Time<i 
-            v-show="mode == 'time'" 
+        <li><div
+          class="btn_toggle"
+          @click="timeClick"><i class="fa fa-calendar"/> Time<i
+            v-show="mode == 'time'"
             class="fa fa-check"/></div></li>
       </div>
-      
-      <SearchMode 
+
+      <SearchMode
         :mode="mode"
         :date="date"
         @change="change"
@@ -44,13 +44,13 @@
 
     </div>
 
-    <SearchResult 
-      :mode="mode" 
+    <SearchResult
+      :mode="mode"
       :text="search_text"
       :date-range="dateRange"
       :is-open="openCalendar"/>
 
-    <VueRangedatePicker 
+    <VueRangedatePicker
       :is-open="openCalendar"
       @selected="setSelectedDate"
       @openCal="calendarOpen"/>
@@ -116,13 +116,13 @@ export default {
       let start_date = startdate.split(" ");
       let end_date = enddate.split(" ");
       if (startdate && enddate) {
-        this.date = start_date[3] + " " + start_date[1] + " " + start_date[2] + 
-                    " -- " + 
+        this.date = start_date[3] + " " + start_date[1] + " " + start_date[2] +
+                    " -- " +
                     end_date[3] + " " + end_date[1] + " " + end_date[2];
       } else {
         this.date = "";
       }
-      
+
     },
     getDateString(date, format = this.format) {
       if (!date) {
@@ -141,6 +141,10 @@ export default {
 
 <style scoped>
 
+.search-bar {
+  border-style: ridge;
+}
+
 .input-group .form-control, .input-group-addon, .input-group-btn {
   display: table-cell;
 }
@@ -148,7 +152,7 @@ export default {
 .toggle-menu{
   position:absolute;
   z-index: 1000;
-  
+
   list-style: none;
   box-shadow: 0 6px 12px rgba(0,0,0,.175);
   background-color: white;

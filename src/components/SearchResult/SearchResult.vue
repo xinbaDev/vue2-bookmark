@@ -110,6 +110,7 @@ export default {
       showEditModal: false,
       showExportModal: false,
 
+      bookmark_id: null,
       title:"",
       bookgroup: {},
       booklists: [],
@@ -371,6 +372,7 @@ export default {
 
 .search_operation {
   padding: 3px;
+  border-bottom-style: ridge;
 }
 
 </style>
