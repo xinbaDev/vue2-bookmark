@@ -169,8 +169,10 @@ export default {
         this.bookgroup[book]['children'] = [];
       }
 
+      //populate
       for (let i = 0; i < this.booklists.length; i++) {
-        this.bookgroup[this.booklists[i].parentId]['children'].push(this.booklists[i]);
+        let groupId = this.booklists[i].parentId;
+        this.bookgroup[groupId]['children'].push(this.booklists[i]);
       }
 
       let books = [];
@@ -179,7 +181,6 @@ export default {
         let children = this.bookgroup[group]['children'];
 
         if (children.length > 0) {
-
           children.sort(function(a, b) {
             return sortBookmark(a, b, that.sortType, that.sortTitleReverse, that.sortDateReverse, );
           });

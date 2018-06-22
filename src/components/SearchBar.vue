@@ -64,7 +64,7 @@
 import fecha from "fecha";
 import SearchMode from "./SearchMode";
 import SearchResult from "./SearchResult/SearchResult";
-import VueRangedatePicker from "./RangedatePicker";
+import VueRangedatePicker from "../libs/RangedatePicker";
 import { eventBus } from "../main";
 
 export default {
