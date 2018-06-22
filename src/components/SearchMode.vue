@@ -1,13 +1,13 @@
 <template>
 
   <div>
-    <table 
-      v-if="mode == 'time'" 
+    <table
+      v-if="mode == 'time'"
       class="input-table">
       <td>
-        <div 
-          ref="reportrange" 
-          class="pull-right bookmark-calendar" 
+        <div
+          ref="reportrange"
+          class="pull-right bookmark-calendar"
           @click="toggle">
           <i class="glyphicon glyphicon-calendar fa fa-calendar"/>
           {{ date }}
@@ -15,25 +15,25 @@
       </td>
     </table>
 
-    <table 
+    <table
       v-if="mode != 'time'"
       class="input-table">
       <td>
         <div style="position: relative">
-          <input 
-            ref="search" 
-            v-model="searchText" 
+          <input
+            ref="search"
+            v-model="searchText"
             :placeholder="showNumOfBookmark()"
             class="search-input form-control fa"
             @keyup="$emit('change', $event.target.value)">
-          <i 
-            v-if="mode == 'title'" 
+          <i
+            v-if="mode == 'title'"
             class="icon-bookmark fa fa-bookmark"/>
-          <i 
-            v-if="mode == 'url'" 
+          <i
+            v-if="mode == 'url'"
             class="icon-link fa fa-link"/>
-          <i 
-            v-if="mode == 'time'" 
+          <i
+            v-if="mode == 'time'"
             class="icon-calendar fa fa-calendar"/>
         </div>
       </td>
@@ -123,10 +123,10 @@ export default {
 }
 
 .bookmark-calendar {
-  background: #fff; 
-  cursor: pointer; 
-  padding: 8px 12px; 
-  border: 1px solid #ccc; 
+  background: #fff;
+  cursor: pointer;
+  padding: 8px 12px;
+  border: 1px solid #ccc;
   width: 100%;
   height: 34px;
 }
