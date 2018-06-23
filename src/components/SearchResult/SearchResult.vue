@@ -140,10 +140,13 @@ export default {
     }*/
   },
   watch: {
-    text: function(new_text, old_text) {
+/*    text: function(new_text, old_text) {
       this.debouncedFilterBookmark();
     },
     dateRange: function(new_dateRange, old_dateRange) {
+      this.debouncedFilterBookmark();
+    },*/
+    booklists: function(new_bookmark_group, old_bookmark_group) {
       this.debouncedFilterBookmark();
     }
   },
