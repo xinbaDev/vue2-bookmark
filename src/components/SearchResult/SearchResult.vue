@@ -15,7 +15,7 @@
       :export-bookmarks="exportBookmarks"
       @export="handleCopy"/>
 
-    <div v-show="booklists.length > 0">
+    <div v-show="showSearchResultOperation()">
       <SearchResultOperation
         class="search_operation"
         @open="handleOpen"
@@ -174,6 +174,14 @@ export default {
     this.debouncedFilterBookmark = _.debounce(this.filterBookmark, 500);
   },
   methods: {
+    showSearchResultOperation() {
+      if (this.mode != "time") {
+        if (this.text == "") {
+          return false;
+        }
+      }
+      return this.booklists.length > 0;
+    },
     isNotEmpty() {
       return this.text != "";
     },
