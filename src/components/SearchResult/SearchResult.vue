@@ -140,13 +140,10 @@ export default {
     }*/
   },
   watch: {
-/*    text: function(new_text, old_text) {
+    text: function(new_text, old_text) {
       this.debouncedFilterBookmark();
     },
     dateRange: function(new_dateRange, old_dateRange) {
-      this.debouncedFilterBookmark();
-    },*/
-    booklists: function(new_bookmark_group, old_bookmark_group) {
       this.debouncedFilterBookmark();
     }
   },
@@ -162,6 +159,10 @@ export default {
 
     eventBus.$on('change_search_mode', () => {
       this.booklists = [];
+      //monkey patch, force search result to refresh
+      //TODO: find a better way to refresh result
+      this.text = "";
+      this.dateRange = null;
     });
 
     eventBus.$on('checked', (bookmark, checked) => {
@@ -171,7 +172,7 @@ export default {
         }
       }
     });
-    this.debouncedFilterBookmark = _.debounce(this.filterBookmark, 500);
+    this.debouncedFilterBookmark = _.debounce(this.filterBookmark, 100);
   },
   methods: {
     showSearchResultOperation() {
