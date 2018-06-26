@@ -1,7 +1,7 @@
 <template>
   <Modal>
     <template slot="body">
-      New Title: <input v-model="title">
+      New Title: <input v-model="newTitle" :placeholder="title">
     </template>
 
     <template slot="footer">
@@ -36,13 +36,12 @@ export default {
   },
   data() {
     return {
-      newTitle: ""
+      newTitle: this.title
     };
   },
   methods: {
     handleEdit(type) {
-      if (type == "Edit") {
-        this.newTitle = this.title;
+      if (type == "edit") {
         this.$emit("change", "edit", this.newTitle);
       } else {
         this.$emit("change", "cancel");
