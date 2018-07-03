@@ -212,6 +212,7 @@ export default {
         this.bookmarkManager.deleteBookmarks(this.bookmark_id);
         chrome.bookmarks.remove(this.bookmark_id);
         eventBus.$emit('numofbookmark', this.bookmarkManager.numOfBooks());
+        this.debouncedFilterBookmark();
       }
     },
     editBookmark(bookmark_id, title) {
@@ -224,6 +225,7 @@ export default {
       if (result != 'cancel') {
         this.bookmarkManager.editBookmarks(this.bookmark_id, new_title);
         chrome.bookmarks.update(this.bookmark_id, {title:new_title});
+        this.debouncedFilterBookmark();
       }
     },
     handleOpen(bookmarks) {
