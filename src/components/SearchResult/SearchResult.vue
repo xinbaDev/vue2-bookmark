@@ -252,6 +252,14 @@ export default {
       this.sortType = sortType;
       this.sortTitleReverse = sortTitleReverse;
     },
+    generatePath(parentid) {
+      if (this.bookgroup[parentid] && this.bookgroup[parentid]["title"] != "Bookmarks bar") {
+        let title = this.bookgroup[parentid]["title"];
+        parentid = this.bookgroup[parentid]["parentid"];
+        return this.generatePath(parentid) + "/" + title;
+      }
+      return "";
+    },
     filterBookmark() {
       if (this.mode != 'time') {
         this.booklists = filterBookmarkByText(this.bookmarkLists, this.text, this.mode);
@@ -281,6 +289,7 @@ export default {
           });
           this.bookmarkGroups.push({
             'title':this.bookgroup[group]['title'],
+            'path': this.generatePath(this.bookgroup[group]["parentid"]),
             'children':children,
             'count':children.length
           });

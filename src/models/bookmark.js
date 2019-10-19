@@ -53,7 +53,7 @@ class Bookmark {
     }
 
     if (bookMark.hasOwnProperty("children")) {
-      _this.bookGroup[bookMark.id] = {'title':bookMark.title, 'children':[]};
+      _this.bookGroup[bookMark.id] = {'title':bookMark.title, 'children':[], 'parentid':bookMark.parentId};
 
       bookMark.children.forEach(function(book) {
         _this._recurGetChildren(book);

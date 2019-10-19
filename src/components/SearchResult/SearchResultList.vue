@@ -14,8 +14,10 @@
         <div class="bookmark_number_circle">
           <span class="bookmark_number">{{ bookmarkgroup['count'] }} </span>
         </div>
+         <div class="bookmark_path">
+          <span class="bookmark_path">{{ bookmarkgroup['path'] }} </span>
+        </div>
       </div>
-
     </div>
     
     <!-- <transition name="slide"> -->
@@ -146,6 +148,10 @@ export default {
 .bookmark_number {
   color: white;
   font-size: 9px;
+}
+
+.bookmark_path{
+   display: inline-flex;
 }
 
 </style>
