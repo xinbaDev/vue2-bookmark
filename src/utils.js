@@ -29,20 +29,28 @@ function sortBookmark(a, b, sortType, isTitleReverse, isDateReverse) {
 
 function filterBookmarkByText(bookmarkLists, search_text, mode) {
   let booklists = [];
+  var search_texts = search_text.split(' ');
+  
   if (mode == 'title') {
-    for (let i = 0; i < bookmarkLists.length; i++) {
-      let filtered_bookmark = bookmarkLists[i];
-      if (filtered_bookmark.title.toLowerCase().indexOf(search_text) != -1) {
-        booklists.push(filtered_bookmark);
+    return bookmarkLists.filter(function(item) {
+      const src = item.title.toString().toLowerCase();
+      for (var i = 0; i < search_texts.length; i++) {
+        if (!src.includes(search_texts[i].toString().toLowerCase())) {
+          return false;
+        }
       }
-    }
+      return true;
+    });
   } else if (mode == 'url') {
-    for (let i = 0; i < bookmarkLists.length; i++) {
-      let filtered_bookmark = bookmarkLists[i];
-      if (filtered_bookmark.url.indexOf(search_text) != -1) {
-        booklists.push(filtered_bookmark);
+    return bookmarkLists.filter(function(item) {
+      const src = item.url.toString().toLowerCase();
+      for (var i = 0; i < search_texts.length; i++) {
+        if (!src.includes(search_texts[i].toString().toLowerCase())) {
+          return false;
+        }
       }
-    }
+      return true;
+    });
   }
   return booklists;
 }

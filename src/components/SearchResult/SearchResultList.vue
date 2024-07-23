@@ -15,7 +15,7 @@
           <span class="bookmark_number">{{ bookmarkgroup['count'] }} </span>
         </div>
          <div class="bookmark_path">
-          <span class="bookmark_path">{{ bookmarkgroup['path'] }} </span>
+          <span class="bookmark_path">{{ (bookmarkgroup['path'].length > 30)? bookmarkgroup['path'].slice(0, 30) + "...":bookmarkgroup['path']}} </span>
         </div>
       </div>
     </div>

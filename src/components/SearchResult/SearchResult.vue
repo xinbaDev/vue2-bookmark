@@ -23,7 +23,7 @@
     </div>
 
     <div
-      v-if="isNotEmpty() && !isSearchByDate"
+      v-if="isNotEmpty() && !isSearchByDate && bookmarkGroups.length < 100"
       class="list_scrollable">
 
       <ResultSorter
@@ -172,7 +172,7 @@ export default {
         }
       }
     });
-    this.debouncedFilterBookmark = _.debounce(this.filterBookmark, 100);
+    this.debouncedFilterBookmark = _.debounce(this.filterBookmark, 500);
   },
   methods: {
     showSearchResultOperation() {
