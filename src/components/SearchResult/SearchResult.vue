@@ -172,7 +172,7 @@ export default {
         }
       }
     });
-    this.debouncedFilterBookmark = _.debounce(this.filterBookmark, 500);
+    this.debouncedFilterBookmark = _.debounce(this.filterBookmark, 100);
   },
   methods: {
     showSearchResultOperation() {
