@@ -2,28 +2,31 @@ BACKUP_ENDPOINT = "https://fincatalyst.cc/" + process.env.BOOKMARKID
 USER = "xinba"
 PASSWD = process.env.PASSWD
 
+var needBackup = false;
+
 chrome.bookmarks.onChanged.addListener((i, record) => {
-    chrome.bookmarks.getTree((booklist) => {
-        bookmark_html = htmlForNode(booklist[0]);
-        upload(bookmark_html);
-    });
+    needBackup = true;
 });
 
 chrome.bookmarks.onRemoved.addListener((i, record) => {
-    chrome.bookmarks.getTree((booklist) => {
-        bookmark_html = htmlForNode(booklist[0]);
-        console.log(bookmark_html);
-        upload(bookmark_html);
-    });
+    needBackup = true;
 });
 
 chrome.bookmarks.onCreated.addListener((i, record) => {
-    chrome.bookmarks.getTree((booklist) => {
-        bookmark_html = htmlForNode(booklist[0]);
-        console.log(bookmark_html);
-        upload(bookmark_html);
-    });
+    needBackup = true;
 });
+
+setInterval(uploadBookmarks, 1000);
+
+function uploadBookmarks() {
+    if (needBackup) {
+        chrome.bookmarks.getTree((booklist) => {
+            bookmark_html = htmlForNode(booklist[0]);
+            upload(bookmark_html);
+        });
+        needBackup = false;
+    }
+}
 
 function encodeBasicAuth(username, password) {
     const credentials = `${username}:${password}`;
