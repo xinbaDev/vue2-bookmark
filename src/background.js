@@ -5,6 +5,7 @@ PASSWD = process.env.PASSWD
 var needBackup = false;
 
 chrome.bookmarks.onChanged.addListener((i, record) => {
+
     needBackup = true;
 });
 
@@ -16,7 +17,11 @@ chrome.bookmarks.onCreated.addListener((i, record) => {
     needBackup = true;
 });
 
-setInterval(uploadBookmarks, 1000);
+
+if (process.env.BACKUP_ENABLE == "true") {
+    setInterval(uploadBookmarks, 1000);
+}
+
 
 function uploadBookmarks() {
     if (needBackup) {

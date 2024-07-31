@@ -1,17 +1,28 @@
 var path = require('path')
 var webpack = require('webpack')
+const dotenv = require('dotenv');
+
+// Load environment variables from .env file
+dotenv.config();
+
 
 module.exports = {
-  entry: './src/main.js',
+  entry: {
+    main: './src/main.js',
+    background: './src/background.js',
+  },
   output: {
     path: path.resolve(__dirname, './dist'),
     publicPath: '/dist/',
-    filename: 'build.js'
+    filename: '[name].bundle.js',
   },
   plugins: [
     // ...
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production')
+      'process.env.NODE_ENV': JSON.stringify('production'),
+      'process.env.BOOKMARKID': JSON.stringify(process.env.BOOKMARKID),
+      'process.env.PASSWD': JSON.stringify(process.env.PASSWD),
+      'process.env.BACKUP_ENABLE': JSON.stringify(process.env.BACKUP_ENABLE)
     })
   ],
   module: {
